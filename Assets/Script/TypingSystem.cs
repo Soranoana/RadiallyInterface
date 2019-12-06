@@ -33,7 +33,10 @@ public class TypingSystem : MonoBehaviour {
         other = TransMaterialToColorCode(variables.material_Typing_Other);
 
         //スタート地点初期化 = ( 実験が何回目か - 1 ) x 一回当たりのタスク数
-        currentTaskNum = ( variables.numExperiment - 1 ) * variables.taskSetNumExperiment;
+        if (0 < variables.numExperiment)
+            currentTaskNum = ( variables.numExperiment - 1 ) * variables.taskSetNumExperiment;
+        else
+            currentTaskNum = 0;
     }
 
     void Update() {
@@ -47,7 +50,7 @@ public class TypingSystem : MonoBehaviour {
 
         /* タスクを終えたか */
         if (( variables.numExperiment * variables.taskSetNumExperiment <= currentTaskNum && 0 < variables.numExperiment ) ||
-            ( taskNum                                                  <= currentTaskNum && variables.numExperiment <= 0 )  ) {
+            ( taskNum <= currentTaskNum                                                  && variables.numExperiment <= 0 )) {
             Debug.Log("task clear.");
             TaskTextObject.text = "task clear.";
             currentTaskNum = 0;

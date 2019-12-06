@@ -199,7 +199,7 @@ MonoBehaviour:
   CubesIntervalY: 0
   CubeWidth: 0
   CubeVertical: 0
-  SeedExperiment: 1
+  SeedExperiment: 0
   NumExperiment: 0
   TaskSetNumExperiment: 5
 --- !u!4 &72408992
