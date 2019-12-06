@@ -31,6 +31,9 @@ public class TypingSystem : MonoBehaviour {
         clear = TransMaterialToColorCode(variables.material_Typing_Clear);
         error = TransMaterialToColorCode(variables.material_Typing_Error);
         other = TransMaterialToColorCode(variables.material_Typing_Other);
+
+        //スタート地点初期化 = ( 実験が何回目か - 1 ) x 一回当たりのタスク数
+        currentTaskNum = ( variables.numExperiment - 1 ) * variables.taskSetNumExperiment;
     }
 
     void Update() {
@@ -42,14 +45,15 @@ public class TypingSystem : MonoBehaviour {
             currentTaskClear = false;
         }
 
-        /* とりあえず　一周したら止める */
-        if (currentTaskNum >= taskNum) {
+        /* タスクを終えたか */
+        if (( variables.numExperiment * variables.taskSetNumExperiment <= currentTaskNum && 0 < variables.numExperiment ) ||
+            ( taskNum                                                  <= currentTaskNum && variables.numExperiment <= 0 )  ) {
             Debug.Log("task clear.");
             TaskTextObject.text = "task clear.";
             currentTaskNum = 0;
             Destroy(this);
         }
-        /* とりあえず　終わり */
+        /* タスクを終えたか　終わり */
         else {
             displayTaskText();
             displayInputText();
@@ -99,6 +103,11 @@ public class TypingSystem : MonoBehaviour {
 
     //タスクのキューを作成
     void decideTaskIndexQueue() {
+        //seed値の初期化
+        if (0 <= variables.seedExperiment) {
+            //Random.seed = variables.seedExperiment;
+            Random.InitState(variables.seedExperiment);
+        }
         for (int i = 0; i < taskNum; i++) {
             int randomIndex;
             //とりあえず乱数出す

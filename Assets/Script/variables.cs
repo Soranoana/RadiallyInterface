@@ -156,6 +156,15 @@ public class variables : MonoBehaviour {
     //二手択一用
     public static bool isLeftHandLastTouch { get; set; }
 
+    //実験用生成seed値
+    public static int seedExperiment { get; set; }
+
+    //実験用何回目か
+    public static int numExperiment { get; set; }
+
+    //実験用一回当たり何文字実行？
+    public static int taskSetNumExperiment { get; set; }
+
     /* Inspector用 */
     [SerializeField, Header("円環の内径(単位cm)")]
     private float RadiusIn;
@@ -247,10 +256,28 @@ public class variables : MonoBehaviour {
     [SerializeField, Header("50音システムのキーの横の長さ(単位cm)")]
     private float CubeWidth;
 
-    [SerializeField, Header("/50音システムのキーの縦の長さ(単位cm)")]
+    [SerializeField, Header("50音システムのキーの縦の長さ(単位cm)")]
     private float CubeVertical;
 
+    [SerializeField, Header("実験用生成seed値"), Tooltip("0未満で完全ランダム")]
+    private int SeedExperiment;
+
+    [SerializeField, Header("実験が何回目か"), Tooltip("0以下ですべて実行")]
+    private int NumExperiment;
+
+    [SerializeField, Header("実験一回当たり何ワード実行か"), Tooltip("0以上")]
+    private int TaskSetNumExperiment;
+
+
     private void Awake() {
+        FieldSerialize();
+    }
+
+    private void OnValidate() {
+        FieldSerialize();
+    }
+
+    private void FieldSerialize () {
         //内径
         radiusIn = RadiusIn / 100;
         //外形
@@ -335,5 +362,9 @@ public class variables : MonoBehaviour {
         cubeWidth = CubeWidth / 100;
         cubeVertical = CubeVertical / 100;
 
+        //実験関係
+        seedExperiment = SeedExperiment;
+        numExperiment = NumExperiment;
+        taskSetNumExperiment = TaskSetNumExperiment;
     }
 }
