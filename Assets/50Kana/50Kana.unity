@@ -199,9 +199,9 @@ MonoBehaviour:
   CubesIntervalY: 0.5
   CubeWidth: 3
   CubeVertical: 3
-  SeedExperiment: 1
+  SeedExperiment: 0
   NumExperiment: 1
-  TaskSetNumExperiment: 1
+  TaskSetNumExperiment: 5
 --- !u!4 &72408992
 Transform:
   m_ObjectHideFlags: 0
