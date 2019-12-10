@@ -412,7 +412,7 @@ public class CubeKey : MonoBehaviour {
     private bool exitedDiagonally() {
         Vector3 fingerVector = variables.fingers[(int)fingerNum].transform.position - wasFingerPosition[(int)fingerNum];
         float dot = Vector3.Dot(normalVector[3] * -1, fingerVector);
-        Debug.Log(Mathf.Acos(dot)+" " + variables.cubeAngle);
+        //Debug.Log(Mathf.Acos(dot)+" " + variables.cubeAngle);
         if (Mathf.Acos(dot) <= variables.cubeAngle)
             return true;
         return false;
@@ -437,7 +437,7 @@ public class CubeKey : MonoBehaviour {
     private bool enteredDiagonally() {
         Vector3 fingerVector = variables.fingers[(int)fingerNum].transform.position - wasFingerPosition[(int)fingerNum];
         float dot = Vector3.Dot(normalVector[3]*-1, fingerVector);
-        Debug.Log(dot);
+        //Debug.Log(dot);
         if (Mathf.Acos(dot) <= variables.cubeAngle)
             return true;
         return false;
