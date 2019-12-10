@@ -81,6 +81,9 @@ public class CubeKey : MonoBehaviour {
 
         //斜め入出対策初期化
         wasFingerPosition = new Vector3[2];
+        for (int i = 0; i < variables.fingers.Length; i++)
+            wasFingerPosition[i] = variables.fingers[i].transform.position;
+
 
         //法線初期化
         normalVector = new Vector3[6];
@@ -198,7 +201,9 @@ public class CubeKey : MonoBehaviour {
             inCol = fireInnerProductCollider();
 
         for (int i = 0; i < variables.fingers.Length; i++)
-            wasFingerPosition[(int)fingerNum] = variables.fingers[(int)fingerNum].transform.position;
+            if (wasFingerPosition[i] == Vector3.zero)
+                wasFingerPosition[i] = variables.fingers[i].transform.position;
+
 
         if (!doneEnter && inCol) {
             doneEnter = true;
@@ -206,7 +211,14 @@ public class CubeKey : MonoBehaviour {
         } else if (doneEnter && !inCol) {
             doneEnter = false;
             OnTriggerExitOwnMade(null);
+            for (int i = 0; i < variables.fingers.Length; i++)
+                if (wasFingerPosition[i] != Vector3.zero)
+                    wasFingerPosition[i] = Vector3.zero;
         }
+
+        if (fingerNum != null)
+            for (int i = 0; i < variables.fingers.Length; i++)
+                wasFingerPosition[(int)fingerNum] = variables.fingers[(int)fingerNum].transform.position;
     }
 
     //インスペクターからの変更時に再計算
@@ -390,7 +402,7 @@ public class CubeKey : MonoBehaviour {
             col = true;
         } else if (exitedDiagonally()) {
             //斜めに出た
-            col = true;
+            //col = true;
         }
         fingerNum = null;
         return col;
@@ -400,6 +412,7 @@ public class CubeKey : MonoBehaviour {
     private bool exitedDiagonally() {
         Vector3 fingerVector = variables.fingers[(int)fingerNum].transform.position - wasFingerPosition[(int)fingerNum];
         float dot = Vector3.Dot(normalVector[3] * -1, fingerVector);
+        Debug.Log(Mathf.Acos(dot)+" " + variables.cubeAngle);
         if (Mathf.Acos(dot) <= variables.cubeAngle)
             return true;
         return false;
@@ -414,7 +427,7 @@ public class CubeKey : MonoBehaviour {
             col = true;
         } else if (enteredDiagonally()) {
             //斜めに出た
-            col = true;
+            //col = true;
         }
         fingerNum = null;
         return col;
@@ -423,7 +436,8 @@ public class CubeKey : MonoBehaviour {
     //斜めに指が入ったかどうか
     private bool enteredDiagonally() {
         Vector3 fingerVector = variables.fingers[(int)fingerNum].transform.position - wasFingerPosition[(int)fingerNum];
-        float dot = Vector3.Dot(normalVector[3], fingerVector);
+        float dot = Vector3.Dot(normalVector[3]*-1, fingerVector);
+        Debug.Log(dot);
         if (Mathf.Acos(dot) <= variables.cubeAngle)
             return true;
         return false;
