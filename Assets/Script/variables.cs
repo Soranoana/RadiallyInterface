@@ -153,6 +153,9 @@ public class variables : MonoBehaviour {
     //50音システムのキーの縦の長さ
     public static float cubeVertical { get; set; }
 
+    //50音システムのキーの斜め抜け可能角度
+    public static float cubeAngle { get; set; }
+
     //二手択一用
     public static bool isLeftHandLastTouch { get; set; }
 
@@ -259,6 +262,10 @@ public class variables : MonoBehaviour {
     [SerializeField, Header("50音システムのキーの縦の長さ(単位cm)")]
     private float CubeVertical;
 
+    [SerializeField, Header("50音システムのキーの斜め抜け可能角度(単位°)")]
+    private float CubeAngle;
+
+
     [SerializeField, Header("実験用生成seed値"), Tooltip("0未満で完全ランダム")]
     private int SeedExperiment;
 
@@ -277,7 +284,7 @@ public class variables : MonoBehaviour {
         FieldSerialize();
     }
 
-    private void FieldSerialize () {
+    private void FieldSerialize() {
         //内径
         radiusIn = RadiusIn / 100;
         //外形
@@ -361,6 +368,7 @@ public class variables : MonoBehaviour {
         cubesIntervalY = CubesIntervalY / 100;
         cubeWidth = CubeWidth / 100;
         cubeVertical = CubeVertical / 100;
+        cubeAngle = CubeAngle * ( Mathf.PI * 2 / 360 );
 
         //実験関係
         seedExperiment = SeedExperiment;

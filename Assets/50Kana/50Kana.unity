@@ -199,6 +199,7 @@ MonoBehaviour:
   CubesIntervalY: 0.5
   CubeWidth: 3
   CubeVertical: 3
+  CubeAngle: 45
   SeedExperiment: 0
   NumExperiment: 1
   TaskSetNumExperiment: 5

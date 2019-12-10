@@ -11,6 +11,12 @@ public class CubeKey : MonoBehaviour {
     private bool doneEnter = false;
     private bool inCol = false;
 
+    //斜め抜け実装用
+    //侵入してきた指オブジェクト
+    //GameObject fingerObj;
+    //侵入してきた指の1フレーム前の座標
+    Vector3[] wasFingerPosition;
+
     //頂点座標
     Vector3[] StartVertex = new Vector3[4];
     Vector3[] EndVertex = new Vector3[4];
@@ -72,6 +78,9 @@ public class CubeKey : MonoBehaviour {
     public string MyText { get; set; } = "";
 
     void Start() {
+
+        //斜め入出対策初期化
+        wasFingerPosition = new Vector3[2];
 
         //法線初期化
         normalVector = new Vector3[6];
@@ -188,6 +197,9 @@ public class CubeKey : MonoBehaviour {
         if (meshRenderer.enabled)
             inCol = fireInnerProductCollider();
 
+        for (int i = 0; i < variables.fingers.Length; i++)
+            wasFingerPosition[(int)fingerNum] = variables.fingers[(int)fingerNum].transform.position;
+
         if (!doneEnter && inCol) {
             doneEnter = true;
             OnTriggerEnterOwnMade(null);
@@ -263,9 +275,11 @@ public class CubeKey : MonoBehaviour {
     public void OnTriggerEnterOwnMade(GameObject other) {
         if (meshRenderer.material.color != variables.material_TrapezoidPole_Touch.color) {
             if (( other == null ) || ( other != null && other.name.Substring(2) == "index_endPointer" )) {
-                systemScript.UpdateChuringNum(int.Parse(gameObject.name));
-                Debug.Log("i am " + ( int.Parse(gameObject.name) ).ToString());
-                meshRenderer.material = variables.material_TrapezoidPole_Touch;
+                if (wasInFromFront()) {
+                    systemScript.UpdateChuringNum(int.Parse(gameObject.name));
+                    Debug.Log("i am " + ( int.Parse(gameObject.name) ).ToString());
+                    meshRenderer.material = variables.material_TrapezoidPole_Touch;
+                }
             }
         }
     }
@@ -374,9 +388,44 @@ public class CubeKey : MonoBehaviour {
         if (Vector3.Dot(normalVector[3], variables.fingers[(int)fingerNum].transform.position - ( normalBasicVec[3] + transform.position )) < 0) {
             //内向き法線との内積が負なので手前から出た
             col = true;
+        } else if (exitedDiagonally()) {
+            //斜めに出た
+            col = true;
         }
         fingerNum = null;
         return col;
     }
-}
 
+    //斜めに指が抜けたかどうか
+    private bool exitedDiagonally() {
+        Vector3 fingerVector = variables.fingers[(int)fingerNum].transform.position - wasFingerPosition[(int)fingerNum];
+        float dot = Vector3.Dot(normalVector[3] * -1, fingerVector);
+        if (Mathf.Acos(dot) <= variables.cubeAngle)
+            return true;
+        return false;
+    }
+
+
+    //指が手前から入ったかどうかを判定する
+    private bool wasInFromFront() {
+        bool col = false;
+        if (Vector3.Dot(normalVector[3], variables.fingers[(int)fingerNum].transform.position - ( normalBasicVec[3] + transform.position )) > 0) {
+            //内向き法線との内積が負なので手前から出た
+            col = true;
+        } else if (enteredDiagonally()) {
+            //斜めに出た
+            col = true;
+        }
+        fingerNum = null;
+        return col;
+    }
+
+    //斜めに指が入ったかどうか
+    private bool enteredDiagonally() {
+        Vector3 fingerVector = variables.fingers[(int)fingerNum].transform.position - wasFingerPosition[(int)fingerNum];
+        float dot = Vector3.Dot(normalVector[3], fingerVector);
+        if (Mathf.Acos(dot) <= variables.cubeAngle)
+            return true;
+        return false;
+    }
+}
