@@ -47,7 +47,7 @@ public class logSave : MonoBehaviour {
         sw.Write(swStr.Replace("\t", ","));
         sw.Flush();
         sw.Close();
-        Debug.Log(swStr.Replace("\t", " "));
+        //Debug.Log(swStr.Replace("\t", " "));
         deltaTime = NowTimeNum();
         deltaTimeF = Time.fixedTime;
     }

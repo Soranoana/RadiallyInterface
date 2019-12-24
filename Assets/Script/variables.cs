@@ -368,7 +368,7 @@ public class variables : MonoBehaviour {
         cubesIntervalY = CubesIntervalY / 100;
         cubeWidth = CubeWidth / 100;
         cubeVertical = CubeVertical / 100;
-        cubeAngle = CubeAngle * ( Mathf.PI * 2 / 360 );
+        cubeAngle = Mathf.Cos(CubeAngle *Mathf.Deg2Rad);
 
         //実験関係
         seedExperiment = SeedExperiment;

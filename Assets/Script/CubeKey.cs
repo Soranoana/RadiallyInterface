@@ -402,7 +402,7 @@ public class CubeKey : MonoBehaviour {
             col = true;
         } else if (exitedDiagonally()) {
             //斜めに出た
-            //col = true;
+            col = true;
         }
         fingerNum = null;
         return col;
@@ -411,9 +411,8 @@ public class CubeKey : MonoBehaviour {
     //斜めに指が抜けたかどうか
     private bool exitedDiagonally() {
         Vector3 fingerVector = variables.fingers[(int)fingerNum].transform.position - wasFingerPosition[(int)fingerNum];
-        float dot = Vector3.Dot(normalVector[3] * -1, fingerVector);
-        //Debug.Log(Mathf.Acos(dot)+" " + variables.cubeAngle);
-        if (Mathf.Acos(dot) <= variables.cubeAngle)
+        float cosTheta = cosAngleBetweenVectors(normalVector[3] * -1, fingerVector);
+        if (cosTheta >= variables.cubeAngle)
             return true;
         return false;
     }
@@ -427,7 +426,7 @@ public class CubeKey : MonoBehaviour {
             col = true;
         } else if (enteredDiagonally()) {
             //斜めに出た
-            //col = true;
+            col = true;
         }
         fingerNum = null;
         return col;
@@ -436,10 +435,17 @@ public class CubeKey : MonoBehaviour {
     //斜めに指が入ったかどうか
     private bool enteredDiagonally() {
         Vector3 fingerVector = variables.fingers[(int)fingerNum].transform.position - wasFingerPosition[(int)fingerNum];
-        float dot = Vector3.Dot(normalVector[3]*-1, fingerVector);
-        //Debug.Log(dot);
-        if (Mathf.Acos(dot) <= variables.cubeAngle)
+        float cosTheta = cosAngleBetweenVectors(normalVector[3] * -1, fingerVector);
+        if (cosTheta >= variables.cubeAngle)
             return true;
         return false;
+    }
+
+    //2つのベクトルのなす角のcos値
+    //参考　http://w3e.kanazawa-it.ac.jp/math/category/vector/henkan-tex.cgi?target=/math/category/vector/naiseki-wo-fukumu-kihonsiki.html
+    private float cosAngleBetweenVectors(Vector3 a, Vector3 b) {
+        float a1 = a.x, a2 = a.y, a3 = a.z, b1 = b.x, b2 = b.y, b3 = b.z;
+        float cosTheta = ( a1 * b1 + a2 * b2 + a3 * b3 ) / ( Mathf.Sqrt(Mathf.Pow(a1, 2) + Mathf.Pow(a2, 2) + Mathf.Pow(a3, 2)) * Mathf.Sqrt(Mathf.Pow(b1, 2) + Mathf.Pow(b2, 2) + Mathf.Pow(b3, 2)) );
+        return cosTheta;
     }
 }
