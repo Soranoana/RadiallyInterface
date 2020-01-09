@@ -505,8 +505,7 @@ public class centralSystem : MonoBehaviour {
                     //表示
                     InputText += setText;
                     SendText(InputText);
-                    variables.logInstance.LogSaving("key down\t" + setText,true);
-                    variables.logInstance.LogSaving("now string\t" + InputText,false);
+                    variables.logInstance.LogSaving("key down\t" + setText, "now string\t" + InputText);
                     //準備用の変数を初期化
                     setText = "";
 
@@ -661,8 +660,7 @@ public class centralSystem : MonoBehaviour {
             //表示
             InputText += setText;
             SendText(InputText);
-            variables.logInstance.LogSaving("key down\t" + InputText,true);
-            variables.logInstance.LogSaving("now string\t" + InputText, false);
+            variables.logInstance.LogSaving("key down\t" + InputText, "now string\t" + InputText);
             //準備用の変数を初期化
             setText = "";
             //中心へ戻った
@@ -703,8 +701,7 @@ public class centralSystem : MonoBehaviour {
             //表示
             InputText += setText;
             SendText(InputText);
-            variables.logInstance.LogSaving("key down\t" + InputText,true);
-            variables.logInstance.LogSaving("now string\t" + InputText, false);
+            variables.logInstance.LogSaving("key down\t" + InputText, "now string\t" + InputText);
             //準備用の変数を初期化
             setText = "";
             touchFlg = false;

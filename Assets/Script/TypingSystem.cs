@@ -140,8 +140,10 @@ public class TypingSystem : MonoBehaviour {
             //なければそのままスルー
             TextClear += taskIndexQueue[currentTaskNum][i];
             //タスク内容をクリアしたか
-            if (i + 1 == taskIndexQueue[currentTaskNum].Length)
+            if (i + 1 == taskIndexQueue[currentTaskNum].Length) {
+                variables.logInstance.textCount(taskIndexQueue[currentTaskNum].Length);
                 currentTaskClear = true;
+            }
         }
         //タグの締め
         TaskTextObject.text += TextClear + "</color>";
@@ -163,16 +165,16 @@ public class TypingSystem : MonoBehaviour {
                 inputText = inputText.Substring(0, i) + inputText[i + 1];
                 centralSystem.EditInputText(inputText);
                 displayTaskText();
-                variables.logInstance.LogSaving("delete",true);
-                variables.logInstance.LogSaving("now string\t" + inputText, false);
+                variables.logInstance.OnDelete();
+                variables.logInstance.LogSaving("delete", "now string\t" + inputText);
                 return;
             } else if (i > TextClear.Length && i < inputText.Length) {
                 //エラー文字２文字目について
                 inputText = inputText.Substring(0, i - 1) + inputText[i];
                 centralSystem.EditInputText(inputText);
                 displayTaskText();
-                variables.logInstance.LogSaving("delete", true);
-                variables.logInstance.LogSaving("now string\t" + inputText, false);
+                variables.logInstance.OnDelete();
+                variables.logInstance.LogSaving("delete", "now string\t" + inputText);
                 return;
             } else if (i == TextClear.Length && i + 1 < inputText.Length) {
                 //エラー文字1文字目について
@@ -181,8 +183,8 @@ public class TypingSystem : MonoBehaviour {
                     inputText = inputText.Substring(0, i) + inputText[i + 1];
                     centralSystem.EditInputText(inputText);
                     displayTaskText();
-                    variables.logInstance.LogSaving("delete", true);
-                    variables.logInstance.LogSaving("now string\t" + inputText, false);
+                    variables.logInstance.OnDelete();
+                    variables.logInstance.LogSaving("delete", "now string\t" + inputText);
                     return;
                 }
             }
@@ -216,7 +218,7 @@ public class TypingSystem : MonoBehaviour {
         InputTextObject.text = inputText;
     }
 
-    //マテリアル情報をカラーコード情報に返還
+    //マテリアル情報をカラーコード情報に変換
     private string TransMaterialToColorCode(Material material) {
         string colorCode = "<color=#";
         //カラーを取り出したうえで、16進数に変換、格納

@@ -11,6 +11,12 @@ public class logSave : MonoBehaviour {
     private float deltaTime;
     private float deltaTimeF;
 
+    private int deleteCount = 0;
+    private float sumTime = 0;
+    private int textSum = 0;
+    private float startTime = 0f;
+    private float currentTime = 0f;
+
     void Start() {
         string nowdate = Nowdate();
 
@@ -42,7 +48,7 @@ public class logSave : MonoBehaviour {
         //nowdate = nowdate.Replace("／", "/");
         //nowdate = nowdate.Replace("：", ":");
         sw.WriteLine(nowdate);
-        string swStr = "\tRealtime\tGameTime\t\t\t\tEvent\n";
+        string swStr = "\tRealtime\tGameTime\tDeltaTime\tEvent\n";
 
         sw.Write(swStr.Replace("\t", ","));
         sw.Flush();
@@ -52,25 +58,33 @@ public class logSave : MonoBehaviour {
         deltaTimeF = Time.fixedTime;
     }
 
-    public void LogSaving(string log, bool needDeltaCulc) {
+    void Update() {
+        sumTime += Time.deltaTime;
+    }
+
+    public void LogSaving(string log1, string log2) {
         float ftime = Time.fixedTime;
         sw = new StreamWriter(filePath, true);
         string swStr = "";
         swStr += "\t" + NowTime()/*.Replace("：", ":")*/ + "\t";
         //swStr += Time.fixedTime.ToString() + "\t";
-        if (needDeltaCulc) {
-            swStr += "DeltaTime\t" + ( NowTimeNum() - deltaTime ).ToString("N2") + "\t"+1.234f.ToString()+"\t";
-            swStr += "FixedTime\t" + ( ftime - deltaTimeF ).ToString("N2") + "\t";
-        } else {
-            swStr += "DeltaTime\t" + "none" + "\t";
-            swStr += "FixedTime\t" + "none" + "\t";
-        }
-        swStr += log + "\n";
-        if (needDeltaCulc) {
-            deltaTime = NowTimeNum();
-            deltaTimeF = ftime;
-        }
+        swStr += sumTime + "\t";
+        swStr += ( NowTimeNum() - deltaTime ).ToString("N2") + "\t";
+        //swStr += "FixedTime\t" + ( ftime - deltaTimeF ).ToString("N2") + "\t";
 
+        swStr += log1 + "\n";
+        swStr += "\t\t\t\t" + log2 + "\n";
+
+        deltaTime = NowTimeNum();
+        deltaTimeF = ftime;
+
+        //合計時間計算用
+        if (startTime == 0f) {
+            startTime = sumTime;
+        }
+        currentTime = sumTime;
+
+        //CSV対応するために置き換え
         sw.Write(swStr.Replace("\t", ","));
         sw.Flush();
         sw.Close();
@@ -101,5 +115,26 @@ public class logSave : MonoBehaviour {
                           + System.DateTime.Now.Second
                           + System.DateTime.Now.Millisecond * 0.001f;
         return dateTimeFlo;
+    }
+
+    public void OnDelete() {
+        deleteCount++;
+    }
+
+    public void textCount(int count) {
+        textSum += count;
+    }
+
+    private void OnApplicationQuit() {
+        sw = new StreamWriter(filePath, true);
+        string swStr = "";
+        swStr += "\n";
+        swStr += "\t\t\terror\t" + deleteCount + "\n";
+        swStr += "\t\t\tcharactor\t" + textSum + "\n";
+        swStr += "\t\t\ttime\t" + (currentTime-startTime).ToString("N2") + "\n";
+        sw.Write(swStr.Replace("\t", ","));
+        sw.Flush();
+        sw.Close();
+        Debug.Log("quit");
     }
 }

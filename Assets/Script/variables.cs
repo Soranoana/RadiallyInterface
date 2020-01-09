@@ -169,16 +169,16 @@ public class variables : MonoBehaviour {
     public static int taskSetNumExperiment { get; set; }
 
     /* Inspector用 */
-    [SerializeField, Header("円環の内径(単位cm)")]
+    [SerializeField, Header("円環の内径半径(単位cm)")]
     private float RadiusIn;
 
-    [SerializeField, Header("円環の外径(単位cm)")]
+    [SerializeField, Header("円環の外径半径(単位cm)")]
     private float RadiusOut;
 
-    [SerializeField, Header("円環の内径(単位cm)(Circle用副輪)")]
+    [SerializeField, Header("円環の内径半径(単位cm)(Circle用副輪)")]
     private float RadiusIn_subCircle;
 
-    [SerializeField, Header("円環の外径(単位cm)(Circle用副輪)")]
+    [SerializeField, Header("円環の外径半径(単位cm)(Circle用副輪)")]
     private float RadiusOut_subCircle;
 
     [SerializeField, Header("円環の厚さ(単位cm)")]
