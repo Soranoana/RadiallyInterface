@@ -660,7 +660,7 @@ public class centralSystem : MonoBehaviour {
             //表示
             InputText += setText;
             SendText(InputText);
-            variables.logInstance.LogSaving("key down\t" + InputText, "now string\t" + InputText);
+            variables.logInstance.LogSaving("key down\t" + setText, "now string\t" + InputText);
             //準備用の変数を初期化
             setText = "";
             //中心へ戻った
@@ -687,7 +687,7 @@ public class centralSystem : MonoBehaviour {
         } else if (churingNumber < 2000) {
             //キーの横から指が出た
             touchFlg = false;
-        } else if (churingNumber < 3000 &&!touchFlg) {
+        } else if (churingNumber < 3000 && !touchFlg) {
             //キーの横から出た指がほかのところで手前に戻った
             touchNum = null;
         } else {
@@ -701,7 +701,7 @@ public class centralSystem : MonoBehaviour {
             //表示
             InputText += setText;
             SendText(InputText);
-            variables.logInstance.LogSaving("key down\t" + InputText, "now string\t" + InputText);
+            variables.logInstance.LogSaving("key down\t" + setText, "now string\t" + InputText);
             //準備用の変数を初期化
             setText = "";
             touchFlg = false;
