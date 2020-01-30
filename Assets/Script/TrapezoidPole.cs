@@ -1,4 +1,16 @@
-﻿//using System.Collections;
+﻿/*
+ * ======================================================================
+ * Project Name    : RadiallyInterface
+ * File Name       : TrapezoidPole.cs
+ * Creation Date   : 2020/01/30
+ *  
+ * Copyright © 2020 Soranoana(ソラノアナ). All rights reserved.
+ *  
+ * This source code or any portion thereof must not be  
+ * reproduced or used in any manner whatsoever.
+ * ======================================================================
+ */
+//using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
