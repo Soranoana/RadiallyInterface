@@ -8,6 +8,8 @@
  *  
  * This source code or any portion thereof must not be  
  * reproduced or used in any manner whatsoever.
+ * However, use is permitted only when the name of 
+ * the quotation source or the creator is specified.
  * ======================================================================
  */
 //using System.Collections;
