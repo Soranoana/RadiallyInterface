@@ -156,6 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc27fc1c749858e4d85f94a8b6d21a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlatformType: 0
+  SceneType: 1
   RadiusIn: 5
   RadiusOut: 8
   RadiusIn_subCircle: 4
