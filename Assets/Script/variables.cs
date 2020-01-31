@@ -17,6 +17,34 @@ using UnityEngine.SceneManagement;
 
 public class variables : MonoBehaviour {
 
+    //複数プラットフォーム対応用
+    public enum platform_type {
+        _NonVR_Mouse,
+        _NonVR_LeapMotion,
+        _VIVE_Controller,
+        _VIVE_LeapMotion,
+        _OculusRift_Controller,
+        _OculusRift_LeapMotion,
+        _OculusQuest_controller,
+        _OculusQuest_HandTracking,
+    }
+
+    //複数シーンの一括管理
+    public enum scene_type {
+        _Radially,
+        _RadiallyExperiment,
+        _Circle,
+        _CircleExperiment,
+        _CircleExperiment2,
+        _50KanaInterface,
+    }
+
+    //実行するプラットフォームの選択
+    public static platform_type platformType { get; set; }
+
+    //実行するシーンの選択
+    public static scene_type sceneType { get; set; }
+
     //多角形部分の半径・円環の内側の半径
     public static float radiusIn { get; set; }
 
@@ -181,6 +209,12 @@ public class variables : MonoBehaviour {
     public static int taskSetNumExperiment { get; set; }
 
     /* Inspector用 */
+    [SerializeField, Header("実行するプラットフォームの選択")]
+    private platform_type PlatformType;
+
+    [SerializeField, Header("実行するシーンの選択")]
+    private scene_type SceneType;
+
     [SerializeField, Header("円環の内径半径(単位cm)")]
     private float RadiusIn;
 
@@ -297,6 +331,10 @@ public class variables : MonoBehaviour {
     }
 
     private void FieldSerialize() {
+        //プラットフォーム
+        platformType = PlatformType;
+        //シーン
+        sceneType = SceneType;
         //内径
         radiusIn = RadiusIn / 100;
         //外形
@@ -380,7 +418,7 @@ public class variables : MonoBehaviour {
         cubesIntervalY = CubesIntervalY / 100;
         cubeWidth = CubeWidth / 100;
         cubeVertical = CubeVertical / 100;
-        cubeAngle = Mathf.Cos(CubeAngle *Mathf.Deg2Rad);
+        cubeAngle = Mathf.Cos(CubeAngle * Mathf.Deg2Rad);
 
         //実験関係
         seedExperiment = SeedExperiment;
