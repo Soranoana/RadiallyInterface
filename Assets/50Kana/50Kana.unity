@@ -189,7 +189,7 @@ MonoBehaviour:
     type: 2}
   SystemCommandRadius: 30
   PinchDistance: 3
-  PinchLength: 1
+  PinchLength: 1.5
   SystemTextFontSize: 2
   TrapezoidDivisionNum: 5
   LogInstance: {fileID: 72408999}
