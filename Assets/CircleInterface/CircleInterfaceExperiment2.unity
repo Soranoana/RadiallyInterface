@@ -165,23 +165,23 @@ MonoBehaviour:
   PoleHeight: 10
   LineRendererWidth: 0.5
   LineShiftSlightly: 0.2
-  Material_PolygonalPillar: {fileID: 2100000, guid: 89d3f59fc6cd0b84d8b9c5c9b7c3a0d6,
+  Material_PolygonalPillar: {fileID: 2100000, guid: b2e764a0577f9074a8ea73c77d5d6a61,
     type: 2}
-  Material_TrapezoidPole_Normal: {fileID: 2100000, guid: eb82fcf986ac31e40bf43033a7a4bdba,
+  Material_TrapezoidPole_Normal: {fileID: 2100000, guid: 8f9a2cd7ed47af94c9ec1ce7e40f7da6,
     type: 2}
-  Material_TrapezoidPole_Touch: {fileID: 2100000, guid: e22348ad9b82d6e48b2d1475a0cc5c57,
+  Material_TrapezoidPole_Touch: {fileID: 2100000, guid: 3d14b6416ac245f469763fd4da7aee51,
     type: 2}
-  Material_TrapezoidPole_Normal_Nonactive: {fileID: 2100000, guid: d9f3decaa0da88b45acb6efc10a92662,
+  Material_TrapezoidPole_Normal_Nonactive: {fileID: 2100000, guid: 7a04c7c8b94f9d44eb5486508dbcc1f7,
     type: 2}
   Material_TrapezoidPole_Touch_Nonactive: {fileID: 2100000, guid: dc4a889cab03c964db752ee439e21f75,
     type: 2}
-  Material_LineRenderer: {fileID: 2100000, guid: 8cdd28e35cf867545b9b68e69cf63af0,
+  Material_LineRenderer: {fileID: 2100000, guid: 70e279ecf72f91d4191dd1cf20133d5f,
     type: 2}
   Material_LineRenderer_Nonactive: {fileID: 2100000, guid: 425e5f2e101efb945973f422c7bce3dd,
     type: 2}
   Material_SystemText: {fileID: 2100000, guid: 8f9a2cd7ed47af94c9ec1ce7e40f7da6, type: 2}
-  Material_Text: {fileID: 2100000, guid: 9a2ce2bdc83e67b478b084bbc9501256, type: 2}
-  Material_Text_Nonactive: {fileID: 2100000, guid: 0e422574e24cc494390e9d871c46eaaa,
+  Material_Text: {fileID: 2100000, guid: 6f38af8635d956743897f9de98285afc, type: 2}
+  Material_Text_Nonactive: {fileID: 2100000, guid: cf52b25735c0c924fb96dc21bbe1c815,
     type: 2}
   Material_Typing_Clear: {fileID: 2100000, guid: 7f93d5d6334ef5e49b8ed3f1052342a8,
     type: 2}
@@ -1653,7 +1653,7 @@ Camera:
   m_GameObject: {fileID: 698978054}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1670,7 +1670,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 0.2
   m_Depth: -1
   m_CullingMask:
