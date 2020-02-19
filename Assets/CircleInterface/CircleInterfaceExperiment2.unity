@@ -156,6 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc27fc1c749858e4d85f94a8b6d21a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlatformType: 0
+  SceneType: 0
   RadiusIn: 7.5
   RadiusOut: 12
   RadiusIn_subCircle: 4
@@ -175,7 +177,7 @@ MonoBehaviour:
     type: 2}
   Material_LineRenderer: {fileID: 2100000, guid: 70e279ecf72f91d4191dd1cf20133d5f,
     type: 2}
-  Material_LineRenderer_Nonactive: {fileID: 2100000, guid: 39ef95f0a54fff34596f665a8ddf4e1b,
+  Material_LineRenderer_Nonactive: {fileID: 2100000, guid: 425e5f2e101efb945973f422c7bce3dd,
     type: 2}
   Material_SystemText: {fileID: 2100000, guid: 8f9a2cd7ed47af94c9ec1ce7e40f7da6, type: 2}
   Material_Text: {fileID: 2100000, guid: 6f38af8635d956743897f9de98285afc, type: 2}
@@ -1633,7 +1635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &698978055
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1651,7 +1653,7 @@ Camera:
   m_GameObject: {fileID: 698978054}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1668,8 +1670,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 0.5
+  orthographic: 1
+  orthographic size: 0.2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
