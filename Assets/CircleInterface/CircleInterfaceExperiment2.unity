@@ -169,11 +169,11 @@ MonoBehaviour:
     type: 2}
   Material_TrapezoidPole_Normal: {fileID: 2100000, guid: eb82fcf986ac31e40bf43033a7a4bdba,
     type: 2}
-  Material_TrapezoidPole_Touch: {fileID: 2100000, guid: 3d14b6416ac245f469763fd4da7aee51,
+  Material_TrapezoidPole_Touch: {fileID: 2100000, guid: ab49ea9ad9031294980c3731b04216a9,
     type: 2}
   Material_TrapezoidPole_Normal_Nonactive: {fileID: 2100000, guid: 7a04c7c8b94f9d44eb5486508dbcc1f7,
     type: 2}
-  Material_TrapezoidPole_Touch_Nonactive: {fileID: 2100000, guid: dc4a889cab03c964db752ee439e21f75,
+  Material_TrapezoidPole_Touch_Nonactive: {fileID: 2100000, guid: 4d6749be76eae604a9900859e4a9083b,
     type: 2}
   Material_LineRenderer: {fileID: 2100000, guid: 8cdd28e35cf867545b9b68e69cf63af0,
     type: 2}
