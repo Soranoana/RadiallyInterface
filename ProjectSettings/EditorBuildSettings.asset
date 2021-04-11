@@ -27,6 +27,8 @@ EditorBuildSettings:
     path: Assets/Scene/RadiallyInterface/TrianglePole.unity
     guid: d788ba706346ee74ab8f8973f97e464f
   m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 2f3f09b7db4fca9459bb952e528718f6,
+      type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 5f37ec96f38e99f4781c42e92113190c,
       type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: f56af1c598d53dc47883deefe05e3c1c,
