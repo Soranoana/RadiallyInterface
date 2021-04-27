@@ -1,0 +1,33 @@
+最大目標：プログラムの公開
+
+目標に際し一旦捨てるもの
+    ネイティブでのキーボード機能の置換（デモアプリを目指す）
+
+やりたいこと：全プラットフォーム対応
+    対象プラットフォーム
+        ネイティブ（MicrosoftStore、GooglePlay、AppStore、Boothなど）
+            LeapMotion（デスクトップ）
+            マウス入力対応（デスクトップ）
+            フリック代替（Android）
+            フリック代替（iPhone）
+        Steam
+            VIVE+LeapMotion
+            VIVEコントローラ
+            VIVEハンドトラッキング
+            Cosmosコントローラ
+            Cosmosハンドトラッキング
+        Oculus(AppStore)
+            Questコントローラ
+            Questハンドトラッキング
+
+完成しているもの
+    VIVE+LeapMotion（Masterブランチ）
+
+着手中
+    VIVEコントローラ（project-Oculus&VIVE）
+        直近目標
+            とりあえず動くものを作る
+
+メモ
+XMLで手の階層を管理するか？
+XMLをビルトインして動くか？それとも内容をCSにコンバートする方が得策か？
