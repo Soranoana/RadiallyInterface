@@ -31,7 +31,8 @@ using UnityEngine.EventSystems;
  * 
  */
 
-public class MultipleTrapezoidPole : MonoBehaviour {
+public class MultipleTrapezoidPole : MonoBehaviour
+{
 
     private int poleNum;
 
@@ -113,10 +114,12 @@ public class MultipleTrapezoidPole : MonoBehaviour {
     //Circle用 自身がアクティブかどうか
     public bool isActiveObj { get; set; } = true;
 
-    private void Awake() {
+    private void Awake()
+    {
     }
 
-    void Start() {
+    void Start()
+    {
         //stage情報初期化
         stage = variables.stage;
 
@@ -124,11 +127,14 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         normalVector = new Vector3[variables.trapezoidDivisionNum + 1, 6];
         normalBasicVec = new Vector3[variables.trapezoidDivisionNum + 1, 6];
 
-        if (myParent == null) {
+        if (myParent == null)
+        {
             createSorce = GameObject.Find("central").GetComponent<createTrapezoidPole>();
             //現在のTextSetの段数を取得
             poleSum = variables.poleSum;
-        } else {
+        }
+        else
+        {
             createSorce = myParent.GetComponent<createTrapezoidPole>();
             //自分の親の名前から該当TextSetの行からアイテム数を取得
             //Debug.Log(myParent.name.Substring(9));
@@ -149,11 +155,13 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         CombineInstance[] combineInstanceAry = new CombineInstance[variables.trapezoidDivisionNum + 3];
 
         //メッシュ作成
-        for (DivisionNum = 0; DivisionNum <= variables.trapezoidDivisionNum; DivisionNum++) {
+        for (DivisionNum = 0; DivisionNum <= variables.trapezoidDivisionNum; DivisionNum++)
+        {
             //頂点計算
             CalcVertices();
 
-            if (DivisionNum == 0) {
+            if (DivisionNum == 0)
+            {
                 //最初の一枚だけ別計算
                 //メッシュ作成
                 Mesh meshFirst = new Mesh();
@@ -180,7 +188,8 @@ public class MultipleTrapezoidPole : MonoBehaviour {
             combineInstanceAry[DivisionNum + 1].mesh = mesh;
             combineInstanceAry[DivisionNum + 1].transform = Matrix4x4.Translate(transform.position);
 
-            if (DivisionNum == variables.trapezoidDivisionNum) {
+            if (DivisionNum == variables.trapezoidDivisionNum)
+            {
                 //最後の一枚だけ別計算
                 //メッシュ作成
                 Mesh meshLast = new Mesh();
@@ -221,7 +230,8 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         mesh_filter.mesh.RecalculateNormals();
 
         //XRじゃないなら
-        if (!variables.isOnXR) {
+        if (!variables.isOnXR)
+        {
             //暫定当たり判定用Event Trigger
             //イベントトリガーのアタッチと初期化
             EventTrigger currentTrigger = this.gameObject.AddComponent<EventTrigger>();
@@ -271,9 +281,11 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         transform.parent = createSorce.gameObject.transform;
     }
 
-    void Update() {
+    void Update()
+    {
         //RadiallyはcentralSystemのコルーチン内で初期化される
-        if (variables.isCircleSystem && MyText == "") {
+        if (variables.isCircleSystem && MyText == "")
+        {
             askMyText();
             //stage情報取得
             stage = variables.stage;
@@ -287,78 +299,105 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         else if (isActiveObj && meshRenderer.enabled)
             inCol = fireInnerProductCollider();
 
-        if (!doneEnter && inCol) {
+        if (!doneEnter && inCol)
+        {
             doneEnter = true;
             OnTriggerEnterOwnMade(null);
-        } else if (doneEnter && !inCol) {
+        }
+        else if (doneEnter && !inCol)
+        {
             doneEnter = false;
             OnTriggerExitOwnMade(null);
         }
     }
 
-    private void CalcVertices() {
+    private void CalcVertices()
+    {
         //Circle用副輪の半径対応
         float radiusOut;
         float radiusIn;
-        if (variables.isCircleSystem && isSubRingPole) {
+        if (variables.isCircleSystem && isSubRingPole)
+        {
             radiusOut = variables.radiusOut_subCircle;
             radiusIn = variables.radiusIn_subCircle;
-        } else {
+        }
+        else
+        {
             radiusOut = variables.radiusOut;
             radiusIn = variables.radiusIn;
         }
-        float nSum = (float)( poleSum * ( variables.trapezoidDivisionNum + 1 ) );
-        float nNum = (float)poleNum * ( variables.trapezoidDivisionNum + 1 ) + DivisionNum;
+        float nSum = (float)(poleSum * (variables.trapezoidDivisionNum + 1));
+        float nNum = (float)poleNum * (variables.trapezoidDivisionNum + 1) + DivisionNum;
 
         //台形の外側左の頂点座標その1
-        Vector3 vertex1 = new Vector3(radiusOut * Mathf.Cos(( ( nNum + 0 ) / nSum - 1f / ( 2f * poleSum ) ) * Mathf.PI * 2f) * -1,
-                                      radiusOut * Mathf.Sin(( ( nNum + 0 ) / nSum - 1f / ( 2f * poleSum ) ) * Mathf.PI * 2f),
+        Vector3 vertex1 = new Vector3(radiusOut * Mathf.Cos(((nNum + 0) / nSum - 1f / (2f * poleSum)) * Mathf.PI * 2f) * -1,
+                                      radiusOut * Mathf.Sin(((nNum + 0) / nSum - 1f / (2f * poleSum)) * Mathf.PI * 2f),
                                       0)
                                       + variables.createSourcePosition;
         //台形の外側右の頂点座標その2 
-        Vector3 vertex2 = new Vector3(radiusOut * Mathf.Cos(( ( nNum + 1 ) / nSum - 1f / ( 2f * poleSum ) ) * Mathf.PI * 2f) * -1,
-                                      radiusOut * Mathf.Sin(( ( nNum + 1 ) / nSum - 1f / ( 2f * poleSum ) ) * Mathf.PI * 2f),
+        Vector3 vertex2 = new Vector3(radiusOut * Mathf.Cos(((nNum + 1) / nSum - 1f / (2f * poleSum)) * Mathf.PI * 2f) * -1,
+                                      radiusOut * Mathf.Sin(((nNum + 1) / nSum - 1f / (2f * poleSum)) * Mathf.PI * 2f),
                                       0)
                                       + variables.createSourcePosition;
         //台形の内側左の頂点座標その1
-        Vector3 vertex3 = new Vector3(radiusIn * Mathf.Cos(( ( nNum + 0 ) / nSum - 1f / ( 2f * poleSum ) ) * Mathf.PI * 2f) * -1,
-                                      radiusIn * Mathf.Sin(( ( nNum + 0 ) / nSum - 1f / ( 2f * poleSum ) ) * Mathf.PI * 2f),
+        Vector3 vertex3 = new Vector3(radiusIn * Mathf.Cos(((nNum + 0) / nSum - 1f / (2f * poleSum)) * Mathf.PI * 2f) * -1,
+                                      radiusIn * Mathf.Sin(((nNum + 0) / nSum - 1f / (2f * poleSum)) * Mathf.PI * 2f),
                                       0)
                                       + variables.createSourcePosition;
         //台形の内側右の頂点座標その2
-        Vector3 vertex4 = new Vector3(radiusIn * Mathf.Cos(( ( nNum + 1 ) / nSum - 1f / ( 2f * poleSum ) ) * Mathf.PI * 2f) * -1,
-                                      radiusIn * Mathf.Sin(( ( nNum + 1 ) / nSum - 1f / ( 2f * poleSum ) ) * Mathf.PI * 2f),
+        Vector3 vertex4 = new Vector3(radiusIn * Mathf.Cos(((nNum + 1) / nSum - 1f / (2f * poleSum)) * Mathf.PI * 2f) * -1,
+                                      radiusIn * Mathf.Sin(((nNum + 1) / nSum - 1f / (2f * poleSum)) * Mathf.PI * 2f),
                                       0)
                                       + variables.createSourcePosition;
         //全頂点数8にそれぞれ座標が2つずつある
-        for (int i = 0; i < 8 * 2; i++) {
-            if (i % 8 == 0) {
+        for (int i = 0; i < 8 * 2; i++)
+        {
+            if (i % 8 == 0)
+            {
                 SideVertex[i] = vertex3;
-            } else if (i % 8 == 1) {
+            }
+            else if (i % 8 == 1)
+            {
                 SideVertex[i] = new Vector3(vertex3.x, vertex3.y, vertex3.z + variables.poleHeight);
-            } else if (i % 8 == 2) {
+            }
+            else if (i % 8 == 2)
+            {
                 SideVertex[i] = vertex1;
-            } else if (i % 8 == 3) {
+            }
+            else if (i % 8 == 3)
+            {
                 SideVertex[i] = new Vector3(vertex1.x, vertex1.y, vertex1.z + variables.poleHeight);
-            } else if (i % 8 == 4) {
+            }
+            else if (i % 8 == 4)
+            {
                 SideVertex[i] = vertex2;
-            } else if (i % 8 == 5) {
+            }
+            else if (i % 8 == 5)
+            {
                 SideVertex[i] = new Vector3(vertex2.x, vertex2.y, vertex2.z + variables.poleHeight);
-            } else if (i % 8 == 6) {
+            }
+            else if (i % 8 == 6)
+            {
                 SideVertex[i] = vertex4;
-            } else if (i % 8 == 7) {
+            }
+            else if (i % 8 == 7)
+            {
                 SideVertex[i] = new Vector3(vertex4.x, vertex4.y, vertex4.z + variables.poleHeight);
-            } else {
+            }
+            else
+            {
                 Debug.LogWarning("Calcration Error");
             }
 
         }
 
         //LineRenderer用
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
             LineVertex[DivisionNum * 4 + i] = SideVertex[i];
         }
-        if (DivisionNum == variables.trapezoidDivisionNum) {
+        if (DivisionNum == variables.trapezoidDivisionNum)
+        {
             LineVertex[DivisionNum * 4 + 0 + 4] = SideVertex[6];
             LineVertex[DivisionNum * 4 + 1 + 4] = SideVertex[7];
             LineVertex[DivisionNum * 4 + 2 + 4] = SideVertex[4];
@@ -366,13 +405,16 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         }
 
         //端面用
-        if (DivisionNum == 0) {
+        if (DivisionNum == 0)
+        {
             //最初の端面
             StartVertex[0] = vertex1;
             StartVertex[1] = new Vector3(vertex1.x, vertex1.y, vertex1.z + variables.poleHeight);
             StartVertex[2] = vertex3;
             StartVertex[3] = new Vector3(vertex3.x, vertex3.y, vertex3.z + variables.poleHeight);
-        } else if (DivisionNum == variables.trapezoidDivisionNum) {
+        }
+        else if (DivisionNum == variables.trapezoidDivisionNum)
+        {
             //最後の端面
             EndVertex[0] = new Vector3(vertex2.x, vertex2.y, vertex2.z + variables.poleHeight);
             EndVertex[1] = vertex2;
@@ -380,51 +422,58 @@ public class MultipleTrapezoidPole : MonoBehaviour {
             EndVertex[3] = vertex4;
         }
 
-        createSorce.callBackVertex(new Vector3[4] { SideVertex[0], SideVertex[6], SideVertex[1], SideVertex[7] }, ( int.Parse(gameObject.name) - 1 ) * ( variables.trapezoidDivisionNum + 1 ) + DivisionNum);
+        createSorce.callBackVertex(new Vector3[4] { SideVertex[0], SideVertex[6], SideVertex[1], SideVertex[7] }, (int.Parse(gameObject.name) - 1) * (variables.trapezoidDivisionNum + 1) + DivisionNum);
 
         //Textの座標を計算する
-        if (DivisionNum == ( variables.trapezoidDivisionNum + 1 ) / 2) {
-            if (variables.trapezoidDivisionNum % 2 != 0) {
+        if (DivisionNum == (variables.trapezoidDivisionNum + 1) / 2)
+        {
+            if (variables.trapezoidDivisionNum % 2 != 0)
+            {
                 //分割数が奇数回の時は
-                textPosition = ( SideVertex[0] + SideVertex[2] ) / 2f;
-            } else {
-                textPosition = ( SideVertex[0] + SideVertex[2] + SideVertex[4] + SideVertex[6] ) / 4f;
+                textPosition = (SideVertex[0] + SideVertex[2]) / 2f;
+            }
+            else
+            {
+                textPosition = (SideVertex[0] + SideVertex[2] + SideVertex[4] + SideVertex[6]) / 4f;
             }
         }
     }
 
     //LineVertexからlineVerteciesに整列しなおす（長いので別メソッド）
-    private void SetLineVertecies() {
+    private void SetLineVertecies()
+    {
         //見づらかったからすこしずらした
         Vector3 zPlus = Vector3.forward * variables.lineShiftSlightly;
         Vector3 zMinus = Vector3.back * variables.lineShiftSlightly;
 
         lineVertecies[0] = LineVertex[0] + zMinus;
         lineVertecies[1] = LineVertex[1] + zPlus;
-        lineVertecies[2 + variables.trapezoidDivisionNum] = LineVertex[4 * ( variables.trapezoidDivisionNum ) + 5] + zPlus;
-        lineVertecies[3 + variables.trapezoidDivisionNum] = LineVertex[4 * ( variables.trapezoidDivisionNum ) + 4] + zMinus;
-        lineVertecies[4 + 2 * ( variables.trapezoidDivisionNum )] = LineVertex[0] + zMinus;
-        lineVertecies[5 + 2 * ( variables.trapezoidDivisionNum )] = LineVertex[2] + zMinus;
-        lineVertecies[6 + 2 * ( variables.trapezoidDivisionNum )] = LineVertex[3] + zPlus;
-        lineVertecies[7 + 2 * ( variables.trapezoidDivisionNum )] = LineVertex[1] + zPlus;
-        lineVertecies[8 + 2 * ( variables.trapezoidDivisionNum )] = LineVertex[3] + zPlus;
-        lineVertecies[9 + 3 * ( variables.trapezoidDivisionNum )] = LineVertex[4 * ( variables.trapezoidDivisionNum ) + 7] + zPlus;
-        lineVertecies[10 + 3 * ( variables.trapezoidDivisionNum )] = LineVertex[4 * ( variables.trapezoidDivisionNum ) + 5] + zPlus;
-        lineVertecies[11 + 3 * ( variables.trapezoidDivisionNum )] = LineVertex[4 * ( variables.trapezoidDivisionNum ) + 7] + zPlus;
-        lineVertecies[12 + 3 * ( variables.trapezoidDivisionNum )] = LineVertex[4 * ( variables.trapezoidDivisionNum ) + 6] + zMinus;
-        lineVertecies[13 + 3 * ( variables.trapezoidDivisionNum )] = LineVertex[4 * ( variables.trapezoidDivisionNum ) + 4] + zMinus;
-        lineVertecies[14 + 3 * ( variables.trapezoidDivisionNum )] = LineVertex[4 * ( variables.trapezoidDivisionNum ) + 6] + zMinus;
-        lineVertecies[15 + 4 * ( variables.trapezoidDivisionNum )] = LineVertex[2] + zMinus;
-        for (int i = 1; i <= variables.trapezoidDivisionNum; i++) {
+        lineVertecies[2 + variables.trapezoidDivisionNum] = LineVertex[4 * (variables.trapezoidDivisionNum) + 5] + zPlus;
+        lineVertecies[3 + variables.trapezoidDivisionNum] = LineVertex[4 * (variables.trapezoidDivisionNum) + 4] + zMinus;
+        lineVertecies[4 + 2 * (variables.trapezoidDivisionNum)] = LineVertex[0] + zMinus;
+        lineVertecies[5 + 2 * (variables.trapezoidDivisionNum)] = LineVertex[2] + zMinus;
+        lineVertecies[6 + 2 * (variables.trapezoidDivisionNum)] = LineVertex[3] + zPlus;
+        lineVertecies[7 + 2 * (variables.trapezoidDivisionNum)] = LineVertex[1] + zPlus;
+        lineVertecies[8 + 2 * (variables.trapezoidDivisionNum)] = LineVertex[3] + zPlus;
+        lineVertecies[9 + 3 * (variables.trapezoidDivisionNum)] = LineVertex[4 * (variables.trapezoidDivisionNum) + 7] + zPlus;
+        lineVertecies[10 + 3 * (variables.trapezoidDivisionNum)] = LineVertex[4 * (variables.trapezoidDivisionNum) + 5] + zPlus;
+        lineVertecies[11 + 3 * (variables.trapezoidDivisionNum)] = LineVertex[4 * (variables.trapezoidDivisionNum) + 7] + zPlus;
+        lineVertecies[12 + 3 * (variables.trapezoidDivisionNum)] = LineVertex[4 * (variables.trapezoidDivisionNum) + 6] + zMinus;
+        lineVertecies[13 + 3 * (variables.trapezoidDivisionNum)] = LineVertex[4 * (variables.trapezoidDivisionNum) + 4] + zMinus;
+        lineVertecies[14 + 3 * (variables.trapezoidDivisionNum)] = LineVertex[4 * (variables.trapezoidDivisionNum) + 6] + zMinus;
+        lineVertecies[15 + 4 * (variables.trapezoidDivisionNum)] = LineVertex[2] + zMinus;
+        for (int i = 1; i <= variables.trapezoidDivisionNum; i++)
+        {
             lineVertecies[1 + i] = LineVertex[4 * i + 1] + zPlus;
-            lineVertecies[3 + variables.trapezoidDivisionNum + i] = LineVertex[4 * ( variables.trapezoidDivisionNum - i ) + 4] + zMinus;
-            lineVertecies[8 + 2 * ( variables.trapezoidDivisionNum ) + i] = LineVertex[4 * i + 3] + zPlus;
-            lineVertecies[14 + 3 * ( variables.trapezoidDivisionNum ) + i] = LineVertex[4 * ( variables.trapezoidDivisionNum - i ) + 6] + zMinus;
+            lineVertecies[3 + variables.trapezoidDivisionNum + i] = LineVertex[4 * (variables.trapezoidDivisionNum - i) + 4] + zMinus;
+            lineVertecies[8 + 2 * (variables.trapezoidDivisionNum) + i] = LineVertex[4 * i + 3] + zPlus;
+            lineVertecies[14 + 3 * (variables.trapezoidDivisionNum) + i] = LineVertex[4 * (variables.trapezoidDivisionNum - i) + 6] + zMinus;
         }
 
     }
 
-    private void OnMouseEnterOwnMade() {
+    private void OnMouseEnterOwnMade()
+    {
         OnTriggerEnterOwnMade(null);
         /*if (isActiveObj && meshRenderer.material != variables.material_TrapezoidPole_Touch) {
             if (isSubRingPole)
@@ -435,14 +484,16 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         }*/
     }
 
-    private void OnMouseExitOwnMade() {
+    private void OnMouseExitOwnMade()
+    {
         OnTriggerExitOwnMade(null);
         /*if (isActiveObj) {
             meshRenderer.material = variables.material_TrapezoidPole_Normal;
         }*/
     }
 
-    public void OnTriggerEnter(Collider other) {
+    public void OnTriggerEnter(Collider other)
+    {
         /* if (other.name.Substring(2) == "index_endPointer") {
              if (!doneEnter) {
                  doneEnter = true;
@@ -455,7 +506,8 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         //OnTriggerEnterOwnMade(other.gameObject);
     }
 
-    public void OnTriggerExit(Collider other) {
+    public void OnTriggerExit(Collider other)
+    {
         /*if (other.name.Substring(2) == "index_endPointer") {
             flgExit = true;
         }*/
@@ -466,15 +518,21 @@ public class MultipleTrapezoidPole : MonoBehaviour {
      * Convexを使えない問題が発生したため、
      * 独自メソッドとして再開発
      */
-    public void OnTriggerEnterOwnMade(GameObject other) {
+    public void OnTriggerEnterOwnMade(GameObject other)
+    {
         //Debug.Log("runrun"+ other.name.Substring(2));
-        if (isActiveObj && meshRenderer.material.color != variables.material_TrapezoidPole_Touch.color) {
-            if (( other == null ) || ( other != null && other.name.Substring(2) == "index_endPointer" )) {
-                if (variables.isCircleSystem && isSubRingPole) {
+        if (isActiveObj && meshRenderer.material.color != variables.material_TrapezoidPole_Touch.color)
+        {
+            if ((other == null) || (other != null && other.name.Substring(2) == "index_endPointer"))
+            {
+                if (variables.isCircleSystem && isSubRingPole)
+                {
                     //副輪のときは+100した名前を送る
                     systemScript.UpdateChuringNum(int.Parse(gameObject.name) + 100);
                     //Debug.Log("i am " + ( int.Parse(gameObject.name) + 100 ).ToString());
-                } else {
+                }
+                else
+                {
                     // if (Physics.OverlapSphere(other.transform.position, 0.01f).Any(col => col == GetComponent<Collider>()))
                     systemScript.UpdateChuringNum(int.Parse(gameObject.name));
                     //Debug.Log("i am " + ( int.Parse(gameObject.name) ).ToString());
@@ -485,14 +543,20 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         }
     }
 
-    public void OnTriggerExitOwnMade(GameObject other) {
-        if (isActiveObj && meshRenderer.material.color != variables.material_TrapezoidPole_Normal.color) {
-            if (( other == null ) || ( other != null && other.name.Substring(2) == "index_endPointer" )) {
-                if (variables.isCircleSystem && isSubRingPole) {
+    public void OnTriggerExitOwnMade(GameObject other)
+    {
+        if (isActiveObj && meshRenderer.material.color != variables.material_TrapezoidPole_Normal.color)
+        {
+            if ((other == null) || (other != null && other.name.Substring(2) == "index_endPointer"))
+            {
+                if (variables.isCircleSystem && isSubRingPole)
+                {
                     //副輪のときは+100した名前を送る
                     systemScript.UpdateChuringNum(int.Parse(gameObject.name) + 100 + 1000);
                     //Debug.Log("i am " + ( int.Parse(gameObject.name) + 100 + 1000 ).ToString());
-                } else {
+                }
+                else
+                {
                     //if (!( Physics.OverlapSphere(other.transform.position, 0.01f).Any(col => col == GetComponent<Collider>()) ))
                     systemScript.UpdateChuringNum(int.Parse(gameObject.name) + 1000);
                     //Debug.Log("i am " + ( int.Parse(gameObject.name) + 1000 ).ToString());
@@ -504,7 +568,8 @@ public class MultipleTrapezoidPole : MonoBehaviour {
     }
     /* 独自メソッド　終 */
 
-    private void make3Dtext() {
+    private void make3Dtext()
+    {
         //中心のUI表示
         GameObject textCentor = new GameObject("text");
         //接触判定のないレイヤーに変更
@@ -531,12 +596,14 @@ public class MultipleTrapezoidPole : MonoBehaviour {
         textCentor.transform.parent = this.transform;
     }
 
-    public void setMyParent(GameObject parent) {
+    public void setMyParent(GameObject parent)
+    {
         myParent = parent;
     }
 
     //非アクティブ化用
-    public void Enable(bool enable) {
+    public void Enable(bool enable)
+    {
         // Debug.Log("run");
         meshCollider.enabled = enable;
         meshRenderer.enabled = enable;
@@ -545,12 +612,16 @@ public class MultipleTrapezoidPole : MonoBehaviour {
     }
 
     //自分の数字をシステムに問い合わせる
-    private void askMyText() {
+    private void askMyText()
+    {
         int myNum;// = int.Parse(transform.gameObject.name);
-        if (isSubRingPole) {
+        if (isSubRingPole)
+        {
             string myParentNum = myParent.name.Substring(9);
             myNum = int.Parse(transform.gameObject.name) + int.Parse(myParentNum) * 100;
-        } else {
+        }
+        else
+        {
             myNum = int.Parse(transform.gameObject.name);
         }
         //Debug.Log(myNum);
@@ -558,12 +629,15 @@ public class MultipleTrapezoidPole : MonoBehaviour {
     }
 
     //各台形の法線を計算する
-    private void culcNormal(Vector3[] meshVec) {
+    private void culcNormal(Vector3[] meshVec)
+    {
         //参考
         //https://docs.unity3d.com/ja/2018.4/Manual/ComputingNormalPerpendicularVector.html
         Vector3 a, b, c;
-        for (int i = 0; i < variables.trapezoidDivisionNum + 1; i++) {
-            for (int j = 0; j < 6; j++) {
+        for (int i = 0; i < variables.trapezoidDivisionNum + 1; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
                 a = meshVec[i * 16 + normalNumber[j * 3 + 0] + 4];
                 b = meshVec[i * 16 + normalNumber[j * 3 + 1] + 4];
                 c = meshVec[i * 16 + normalNumber[j * 3 + 2] + 4];
@@ -577,29 +651,46 @@ public class MultipleTrapezoidPole : MonoBehaviour {
     }
 
     //内積を用いて当たり判定を行う
-    private bool fireInnerProductCollider() {
+    private bool fireInnerProductCollider()
+    {
         bool col = false;
-        for (int i = 0; i < variables.fingers.Length; i++) {
-            for (int j = 0; j < variables.trapezoidDivisionNum + 1; j++) {
-                for (int k = 0; k < 6; k++) {
-                    if (variables.isLeftHandLastTouch) {
+
+        //リリースに向けて一旦当たり判定消す。
+        return col;
+
+        for (int i = 0; i < variables.fingers.Length; i++)
+        {
+            for (int j = 0; j < variables.trapezoidDivisionNum + 1; j++)
+            {
+                for (int k = 0; k < 6; k++)
+                {
+                    if (variables.isLeftHandLastTouch)
+                    {
                         if (i == 1)
                             break;
-                    } else {
+                    }
+                    else
+                    {
                         if (i == 0)
                             break;
                     }
-                    if (Vector3.Dot(normalVector[j, k], variables.fingers[i].transform.position - ( normalBasicVec[j, k] + transform.position )) > 0) {
+                    if (Vector3.Dot(normalVector[j, k], variables.fingers[i].transform.position - (normalBasicVec[j, k] + transform.position)) > 0)
+                    {
                         //内側を向いている
                         col = true;
-                    } else {
+                    }
+                    else
+                    {
                         col = false;
                         k = 100;
                     }
                 }
-                if (col) {
+                if (col)
+                {
                     return col;
-                } else {
+                }
+                else
+                {
                 }
             }
         }

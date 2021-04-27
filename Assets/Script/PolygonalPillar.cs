@@ -25,7 +25,8 @@ using UnityEngine.EventSystems;
  * 
  */
 
-public class PolygonalPillar : MonoBehaviour {
+public class PolygonalPillar : MonoBehaviour
+{
 
     private createTrapezoidPole createSorce;
     private centralSystem systemScript;
@@ -74,21 +75,26 @@ public class PolygonalPillar : MonoBehaviour {
     [SerializeField]
     public string MyText { get; set; } = "";
 
-    private void Awake() {
+    private void Awake()
+    {
         systemScript = GameObject.Find("central").GetComponent<centralSystem>();
     }
 
-    void Start() {
+    void Start()
+    {
 
         //法線初期化
-        normalVector = new Vector3[variables.poleSum*(variables.trapezoidDivisionNum + 1), 1];
-        normalBasicVec = new Vector3[variables.poleSum * ( variables.trapezoidDivisionNum + 1 ), 1];
+        normalVector = new Vector3[variables.poleSum * (variables.trapezoidDivisionNum + 1), 1];
+        normalBasicVec = new Vector3[variables.poleSum * (variables.trapezoidDivisionNum + 1), 1];
 
-        if (myParent == null || !variables.isCircleSystem) {
+        if (myParent == null || !variables.isCircleSystem)
+        {
             createSorce = GameObject.Find("central").GetComponent<createTrapezoidPole>();
             //現在のTextSetの段数を取得
             poleSum = variables.poleSum;
-        } else {
+        }
+        else
+        {
             createSorce = myParent.GetComponent<createTrapezoidPole>();
             //自分の親の名前から該当TextSetの行からアイテム数を取得
             //Debug.Log(myParent.name);
@@ -102,18 +108,25 @@ public class PolygonalPillar : MonoBehaviour {
         mesh.Clear();
         //メッシュへの頂点情報の追加
         int PPVindex;
-        if (myParent == null) {
+        if (myParent == null)
+        {
             PPVindex = 0;
-        } else {
+        }
+        else
+        {
             PPVindex = myNum;
         }
         mesh.vertices = variables.polygonalPillarVertex[PPVindex];
         //テキストの位置
         int sum;
-        for (sum = 0, textPosition = Vector3.zero; sum < poleSum * ( variables.trapezoidDivisionNum + 1 ); sum++) {
-            if (myParent == null || !variables.isCircleSystem) {
+        for (sum = 0, textPosition = Vector3.zero; sum < poleSum * (variables.trapezoidDivisionNum + 1); sum++)
+        {
+            if (myParent == null || !variables.isCircleSystem)
+            {
                 textPosition += variables.polygonalPillarVertex[0][sum * 8];
-            } else {
+            }
+            else
+            {
                 textPosition += variables.polygonalPillarVertex[myNum][sum * 8];
             }
         }
@@ -140,7 +153,8 @@ public class PolygonalPillar : MonoBehaviour {
         //NormalMapの再計算
         mesh_filter.mesh.RecalculateNormals();
 
-        if (!variables.isOnXR) {
+        if (!variables.isOnXR)
+        {
             //当たり判定用 Event Trigger
             //イベントトリガーのアタッチと初期化
             EventTrigger currentTrigger = this.gameObject.AddComponent<EventTrigger>();
@@ -167,7 +181,8 @@ public class PolygonalPillar : MonoBehaviour {
         createSorce.IsReadyToDestroy(true);
     }
 
-    private void Update() {
+    private void Update()
+    {
 
         //テキストの更新
         TmeshC.text = MyText;
@@ -177,20 +192,25 @@ public class PolygonalPillar : MonoBehaviour {
         else if (meshRenderer.enabled)
             inCol = fireInnerProductCollider();
 
-        if (!doneEnter && inCol) {
+        if (!doneEnter && inCol)
+        {
             doneEnter = true;
             OnTriggerEnterOwnMade(null);
-        } else if (doneEnter && !inCol) {
+        }
+        else if (doneEnter && !inCol)
+        {
             doneEnter = false;
             OnTriggerExitOwnMade(null);
         }
     }
 
     //何個のオブジェクト中の何番目のオブジェクトか
-    private void SetFace() {
+    private void SetFace()
+    {
         //底面それぞれ3頂点+(ポリゴン二枚なので)側面6頂点 * 角数 * 分割数
-        face = new int[12 * poleSum * ( variables.trapezoidDivisionNum + 1 )];
-        for (int i = 0; i < poleSum * ( variables.trapezoidDivisionNum + 1 ); i++) {
+        face = new int[12 * poleSum * (variables.trapezoidDivisionNum + 1)];
+        for (int i = 0; i < poleSum * (variables.trapezoidDivisionNum + 1); i++)
+        {
             //以下で、poleSum分割の三角柱ができる
             face[i * 12 + 0] = 8 * i + 2;  //側面1
             face[i * 12 + 1] = 8 * i + 1;  //
@@ -200,26 +220,30 @@ public class PolygonalPillar : MonoBehaviour {
             face[i * 12 + 5] = 8 * i + 3;  //
             face[i * 12 + 6] = 8 * i + 4;  //底面1
             face[i * 12 + 7] = 8 * i + 5;  //
-            face[i * 12 + 8] = 8 * poleSum * ( variables.trapezoidDivisionNum + 1 ) + i + 1 - 1;   //底面1の角部分
+            face[i * 12 + 8] = 8 * poleSum * (variables.trapezoidDivisionNum + 1) + i + 1 - 1;   //底面1の角部分
             face[i * 12 + 9] = 8 * i + 7;   //底面2
             face[i * 12 + 10] = 8 * i + 6;  //
-            face[i * 12 + 11] = 9 * poleSum * ( variables.trapezoidDivisionNum + 1 ) + i + 1 - 1;  //底面2の角部分
+            face[i * 12 + 11] = 9 * poleSum * (variables.trapezoidDivisionNum + 1) + i + 1 - 1;  //底面2の角部分
         }
     }
 
-    private void OnMouseEnterOwnMade() {
+    private void OnMouseEnterOwnMade()
+    {
         OnTriggerEnterOwnMade(null);
     }
 
-    private void OnMouseExitOwnMade() {
+    private void OnMouseExitOwnMade()
+    {
         OnTriggerExitOwnMade(null);
     }
 
-    public void OnTriggerEnter(Collider other) {
+    public void OnTriggerEnter(Collider other)
+    {
         OnTriggerEnterOwnMade(other.gameObject);
     }
 
-    public void OnTriggerExit(Collider other) {
+    public void OnTriggerExit(Collider other)
+    {
         OnTriggerExitOwnMade(other.gameObject);
     }
 
@@ -227,24 +251,34 @@ public class PolygonalPillar : MonoBehaviour {
      * Convexを使えない問題が発生したため、
      * 独自メソッドとして再開発
      */
-    public void OnTriggerEnterOwnMade(GameObject other) {
-        if (( other == null ) || ( other != null && other.name.Substring(2) == "index_endPointer" )) {
-            if (isSubRingPillar) {
+    public void OnTriggerEnterOwnMade(GameObject other)
+    {
+        if ((other == null) || (other != null && other.name.Substring(2) == "index_endPointer"))
+        {
+            if (isSubRingPillar)
+            {
                 systemScript.UpdateChuringNum(int.Parse(gameObject.name) + 100);
                 //Debug.Log("i am " + ( int.Parse(gameObject.name) + 100 ).ToString());
-            } else {
+            }
+            else
+            {
                 systemScript.UpdateChuringNum(int.Parse(gameObject.name));
                 //Debug.Log("i am " + ( int.Parse(gameObject.name) ).ToString());
             }
         }
     }
 
-    public void OnTriggerExitOwnMade(GameObject other) {
-        if (( other == null ) || ( other != null && other.name.Substring(2) == "index_endPointer" )) {
-            if (isSubRingPillar) {
+    public void OnTriggerExitOwnMade(GameObject other)
+    {
+        if ((other == null) || (other != null && other.name.Substring(2) == "index_endPointer"))
+        {
+            if (isSubRingPillar)
+            {
                 systemScript.UpdateChuringNum(int.Parse(gameObject.name) + 100 + 1000);
                 //Debug.Log("i am " + ( int.Parse(gameObject.name) + 100 + 1000 ).ToString());
-            } else {
+            }
+            else
+            {
                 systemScript.UpdateChuringNum(int.Parse(gameObject.name) + 1000);
                 //Debug.Log("i am " + ( int.Parse(gameObject.name) + 1000 ).ToString());
             }
@@ -252,7 +286,8 @@ public class PolygonalPillar : MonoBehaviour {
     }
     /* 独自メソッド　終 */
 
-    private void make3Dtext() {
+    private void make3Dtext()
+    {
         //中心のUI表示
         GameObject textCentor = new GameObject("text");
         //接触判定のないレイヤーに変更
@@ -279,23 +314,28 @@ public class PolygonalPillar : MonoBehaviour {
         textCentor.transform.parent = this.transform;
     }
 
-    public void setMyParent(GameObject parent) {
+    public void setMyParent(GameObject parent)
+    {
         myParent = parent;
     }
 
-    public void Enable(bool enable) {
+    public void Enable(bool enable)
+    {
         meshRenderer.enabled = enable;
         meshCollider.enabled = enable;
         textMeshRender.enabled = enable;
     }
 
     //各台形の法線を計算する
-    private void culcNormal(Vector3[] meshVec) {
+    private void culcNormal(Vector3[] meshVec)
+    {
         //参考
         //https://docs.unity3d.com/ja/2018.4/Manual/ComputingNormalPerpendicularVector.html
         Vector3 a, b, c;
-        for (int i = 0; i < variables.trapezoidDivisionNum + 1; i++) {
-            for (int j = 0; j < 6; j++) {
+        for (int i = 0; i < variables.trapezoidDivisionNum + 1; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
                 a = meshVec[i * 16 + normalNumber[j * 3 + 0] + 4];
                 b = meshVec[i * 16 + normalNumber[j * 3 + 1] + 4];
                 c = meshVec[i * 16 + normalNumber[j * 3 + 2] + 4];
@@ -309,29 +349,46 @@ public class PolygonalPillar : MonoBehaviour {
     }
 
     //内積を用いて当たり判定を行う
-    private bool fireInnerProductCollider() {
+    private bool fireInnerProductCollider()
+    {
         bool col = false;
-        for (int i = 0; i < variables.fingers.Length; i++) {
-            for (int j = 0; j < (variables.trapezoidDivisionNum + 1)*variables.poleSum; j++) {
-                for (int k = 0; k < 1; k++) {
-                    if (variables.isLeftHandLastTouch) {
+
+        //リリースに向けて一旦当たり判定消す。
+        return col;
+
+        for (int i = 0; i < variables.fingers.Length; i++)
+        {
+            for (int j = 0; j < (variables.trapezoidDivisionNum + 1) * variables.poleSum; j++)
+            {
+                for (int k = 0; k < 1; k++)
+                {
+                    if (variables.isLeftHandLastTouch)
+                    {
                         if (i == 1)
                             break;
-                    } else {
+                    }
+                    else
+                    {
                         if (i == 0)
                             break;
                     }
-                    if (Vector3.Dot(normalVector[j, k], variables.fingers[i].transform.position - ( normalBasicVec[j, k] + transform.position )) > 0) {
+                    if (Vector3.Dot(normalVector[j, k], variables.fingers[i].transform.position - (normalBasicVec[j, k] + transform.position)) > 0)
+                    {
                         //内側を向いている
                         col = true;
-                    } else {
+                    }
+                    else
+                    {
                         col = false;
                         k = 100;
                     }
                 }
-                if (col) {
+                if (col)
+                {
                     return col;
-                } else {
+                }
+                else
+                {
                 }
             }
         }

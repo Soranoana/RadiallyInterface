@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<リスト>
+  <データ>
+    <名前 言語="日本語">橋本</名前>
+    <売上>120</売上>
+  </データ>
+  <データ>
+    <名前 言語="日本語">山田</名前>
+    <売上>10</売上>
+  </データ>
+  <データ>
+    <名前 言語="日本語">田中</名前>
+    <売上>1500</売上>
+  </データ>
+</リスト>
+
+
+<FingerDataXml>
+  <VIVE>
+    <LeapMotion>
+      <!-- row:横行 column:縦列 -->
+      <ListMatrix attribute = "row">4</ListMatrix>
+      <ListMatrix attribute = "column ">4</ListMatrix>
+      <joint attribute = "Root" name = "">
+        <joint attribute = "hand" name = "">
+          <joint attribute = "hand" name = "">
+
+          </joint>
+        </joint>
+      </joint>
+      [CameraRig]
+        vr_glove_left_model_slim
+          slim_l
+            Root
+              wrist_r
+                finger_thumb_0_r
+                  finger_thumb_1_r
+                    finger_thumb_2_r
+                      finger_thumb_r_end
+                finger_index_meta_r
+                finger_middle_meta_r
+                finger_ring_meta_r
+                finger_pinky_meta_r
+        vr_glove_right_model_slim
+
+    </LeapMotion>
+    <HandTracking>
+    </HandTracking>
+    <Controller>
+    </Controller>
+    <名前 言語="日本語">橋本</名前>
+    <売上>120</売上>
+  </VIVE>
+  <Oculus>
+    <HandTracking>
+    </HandTracking>
+    <Controller>
+    </Controller>
+  </Oculus>
+  <PC>
+    <LeapMotion>
+    </LeapMotion>
+    <Mouse>
+    </Mouse>
+  </PC>
+</FingerDataXml>
