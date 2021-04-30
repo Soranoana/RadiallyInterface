@@ -21,7 +21,8 @@ using UnityEngine;
  * LeapMotionの描画など
  */
 
-public class createPointer : MonoBehaviour {
+public class createPointer : MonoBehaviour
+{
 
     //球体を描画する
     [SerializeField]
@@ -48,21 +49,26 @@ public class createPointer : MonoBehaviour {
     //再計算が必要
     private bool needReCulc = false;
 
-    void Start() {
+    void Start()
+    {
         fingers = new GameObject[LandR.Length, fingerName.Length, fingerJoint.Length];
         fingersRenderer = new MeshRenderer[LandR.Length, fingerName.Length, fingerJoint.Length];
-        for (int LR = 0; LR < LandR.Length; LR++) {
+        for (int LR = 0; LR < LandR.Length; LR++)
+        {
             GameObject hand;
             //リグを取得
             hand = GameObject.Find("Leap Rig");
             //リグの下の手を取得
             hand = hand.transform.Find("Hand Models").gameObject;
-            if (LR == 0) {
+            if (LR == 0)
+            {
                 hand = hand.transform.Find("LoPoly Rigged Hand Left").gameObject;
                 //手の描画の可否
                 handRenderer[LR] = hand.transform.Find("LoPoly_Hand_Mesh_Left").GetComponent<SkinnedMeshRenderer>();
                 handRenderer[LR].enabled = doRenderLeapHands;
-            } else {
+            }
+            else
+            {
                 hand = hand.transform.Find("LoPoly Rigged Hand Right").gameObject;
                 //手の描画の可否
                 handRenderer[LR] = hand.transform.Find("LoPoly_Hand_Mesh_Right").GetComponent<SkinnedMeshRenderer>();
@@ -83,9 +89,11 @@ public class createPointer : MonoBehaviour {
             //行列に保存
             fingers[LR, 0, 0] = hand;
 
-            for (int Name = 1; Name < fingerName.Length; Name++) {
+            for (int Name = 1; Name < fingerName.Length; Name++)
+            {
                 GameObject fingerParent = fingers[LR, 0, 0];
-                for (int Joint = 0; Joint < fingerJoint.Length; Joint++) {
+                for (int Joint = 0; Joint < fingerJoint.Length; Joint++)
+                {
                     //L_thumb_cとR_thumb_cは存在しないので飛ばす
                     if (fingerName[Name] == "thumb" && fingerJoint[Joint] == "c")
                         Joint++;
@@ -140,7 +148,8 @@ public class createPointer : MonoBehaviour {
         variables.fingers[1] = fingers[1, 1, 4];
     }
 
-    void Update() {
+    void Update()
+    {
         //１フレーム目で本スクリプトを削除
         //Destroy(this);
         //再計算をする必要があるか
@@ -149,23 +158,31 @@ public class createPointer : MonoBehaviour {
     }
 
     //値変更時に中身を再度計算
-    private void OnValidate() {
+    private void OnValidate()
+    {
         needReCulc = true;
     }
 
-    private void RenderReCulc() {
+    private void RenderReCulc()
+    {
         //エラー対策
         if (fingers == null)
             return;
 
-        for (int LR = 0; LR < LandR.Length; LR++) {
+        for (int LR = 0; LR < LandR.Length; LR++)
+        {
             handRenderer[LR].enabled = doRenderLeapHands;
-            for (int Name = 1; Name < fingerName.Length; Name++) {
-                for (int Joint = 0; Joint < fingerJoint.Length; Joint++) {
+            for (int Name = 1; Name < fingerName.Length; Name++)
+            {
+                for (int Joint = 0; Joint < fingerJoint.Length; Joint++)
+                {
                     //エラー対策
-                    try {
+                    try
+                    {
                         fingersRenderer[LR, Name, Joint].enabled = doRenderSphere;
-                    } catch {
+                    }
+                    catch
+                    {
                         //エラーが出たらなにもしない
                     }
                 }
