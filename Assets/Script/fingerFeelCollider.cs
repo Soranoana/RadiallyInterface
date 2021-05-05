@@ -23,48 +23,48 @@ using UnityEngine;
 
 public class fingerFeelCollider : MonoBehaviour {
 
-    void Start() {
+	void Start() {
 
-    }
+	}
 
-    void Update() {
-        Collider[] cols = Physics.OverlapSphere(transform.position, transform.localScale.x / 2f);
-        Vector3 myPosition = transform.position; // for example
-        string a = "";
-        foreach (Collider col in cols) {
-            Vector3 closestPoint = col.ClosestPoint(myPosition);
-            Vector3 positionDifference = ( closestPoint - myPosition );
-            Vector3 overlapDirection = positionDifference.normalized;
-            a += col.gameObject.name+" ";
-        }
-        Debug.Log(a);
-    }
+	void Update() {
+		Collider[] cols = Physics.OverlapSphere(transform.position, transform.localScale.x / 2f);
+		Vector3 myPosition = transform.position; // for example
+		string a = "";
+		foreach (Collider col in cols) {
+			Vector3 closestPoint = col.ClosestPoint(myPosition);
+			Vector3 positionDifference = ( closestPoint - myPosition );
+			Vector3 overlapDirection = positionDifference.normalized;
+			a += col.gameObject.name + " ";
+		}
+		// Debug.Log(a);
+	}
 
-    public void OnTriggerEnter(Collider other) {
-        try {
-            other.gameObject.GetComponent<MultipleTrapezoidPole>().OnTriggerEnterOwnMade(this.gameObject);
-            Debug.Log("run");
-        } catch {
-            Debug.Log("指がキーではないオブジェクトに接触しました");
-        }
-        try {
-            other.gameObject.GetComponent<PolygonalPillar>().OnTriggerEnterOwnMade(this.gameObject);
-        } catch {
-            Debug.Log("指が多角柱ではないオブジェクトに接触しました");
-        }
-    }
+	public void OnTriggerEnter(Collider other) {
+		try {
+			other.gameObject.GetComponent<MultipleTrapezoidPole>().OnTriggerEnterOwnMade(this.gameObject);
+			// Debug.Log("run");
+		} catch {
+			// Debug.Log("指がキーではないオブジェクトに接触しました");
+		}
+		try {
+			other.gameObject.GetComponent<PolygonalPillar>().OnTriggerEnterOwnMade(this.gameObject);
+		} catch {
+			// Debug.Log("指が多角柱ではないオブジェクトに接触しました");
+		}
+	}
 
-    public void OnTriggerExit(Collider other) {
-        try {
-            other.gameObject.GetComponent<MultipleTrapezoidPole>().OnTriggerExitOwnMade(this.gameObject);
-        } catch {
-            Debug.Log("指がキーではないオブジェクトとの接触を終えました");
-        }
-        try {
-            other.gameObject.GetComponent<PolygonalPillar>().OnTriggerEnterOwnMade(this.gameObject);
-        } catch {
-            Debug.Log("指が多角柱ではないオブジェクトに接触を終えました");
-        }
-        
-    }
+	public void OnTriggerExit(Collider other) {
+		try {
+			other.gameObject.GetComponent<MultipleTrapezoidPole>().OnTriggerExitOwnMade(this.gameObject);
+		} catch {
+			// Debug.Log("指がキーではないオブジェクトとの接触を終えました");
+		}
+		try {
+			other.gameObject.GetComponent<PolygonalPillar>().OnTriggerEnterOwnMade(this.gameObject);
+		} catch {
+			// Debug.Log("指が多角柱ではないオブジェクトに接触を終えました");
+		}
+
+	}
 }

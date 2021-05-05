@@ -26,75 +26,68 @@ public class CreatePointerManager : MonoBehaviour {
 	//球体を描画する
 	[SerializeField]
 	private bool doRenderSphere = true;
+	[SerializeField]
+	private bool forceRenderColliderSphere = true;
 	//手を描画する
 	[SerializeField]
 	private bool doRenderHands = true;
-	private SkinnedMeshRenderer[] handRenderer = new SkinnedMeshRenderer[2];
 
-	//private GameObject[,,] fingers;
 	//2cm角の球体
-	private Vector3 pointerScale = new Vector3(0.02f, 0.02f, 0.02f);
+	[SerializeField]
+	private float pointerScale = 0.02f;
 	//当たり判定
+	[SerializeField]
 	private float pointerColRad = 0.05f;
 
-	/* LoPoly Rigged Hand 用 */
-	private string[] LandR = new string[2] { "L", "R" };
-	private string[] fingerName = new string[6] { "Palm", "index", "middle", "pinky", "ring", "thumb" };
-	private string[] fingerJoint = new string[5] { "meta", "a", "b", "c", "end" };
-	/* LoPoly Rigged Hand 用 終 */
-	private string[,,] fingersName = new string[2, 6, 6] {{
-		{ "wrist_r","",                     "",                  "",                  "",                   ""},
-		{ "",       "finger_thumb_0_r",     "finger_thumb_1_r",  "finger_thumb_2_r",  "finger_thumb_r_end", "" },
-		{ "",       "finger_index_meta_r",  "finger_index_0_r",  "finger_index_1_r",  "finger_index_2_r",   "finger_index_r_end" },
-		{ "",       "finger_middle_meta_r", "finger_middle_0_r", "finger_middle_1_r", "finger_middle_2_r",  "finger_middle_r_end" },
-		{ "",       "finger_ring_meta_r",   "finger_ring_0_r",   "finger_ring_1_r",   "finger_ring_2_r",    "finger_ring_r_end" },
-		{ "",       "finger_pinky_meta_r",  "finger_pinky_0_r",  "finger_pinky_1_r",  "finger_pinky_2_r",   "finger_pinky_r_end" }
-		},
-		{
-		{ "wrist_r","",                     "",                  "",                  "",                   ""},
-		{ "",       "finger_thumb_0_r",     "finger_thumb_1_r",  "finger_thumb_2_r",  "finger_thumb_r_end", "" },
-		{ "",       "finger_index_meta_r",  "finger_index_0_r",  "finger_index_1_r",  "finger_index_2_r",   "finger_index_r_end" },
-		{ "",       "finger_middle_meta_r", "finger_middle_0_r", "finger_middle_1_r", "finger_middle_2_r",  "finger_middle_r_end" },
-		{ "",       "finger_ring_meta_r",   "finger_ring_0_r",   "finger_ring_1_r",   "finger_ring_2_r",    "finger_ring_r_end" },
-		{ "",       "finger_pinky_meta_r",  "finger_pinky_0_r",  "finger_pinky_1_r",  "finger_pinky_2_r",   "finger_pinky_r_end" }
-		} };
-
-	private GameObject[,,] fingers;
-	private MeshRenderer[,,] fingersRenderer;
-	//再計算が必要
-	private bool needReCulc = false;
-
 	void Start() {
-		fingers = new GameObject[LandR.Length, fingerName.Length, fingerJoint.Length];
-		fingersRenderer = new MeshRenderer[LandR.Length, fingerName.Length, fingerJoint.Length];
+		//VIVE + VIVEコントローラ
+		InitializeViveControlor();
+		//VIVE + LeapMotion
+		//InitializeViveLeapmotion();
+
+	}
+
+	private void InitializeViveLeapmotion() {
+		//腕より上の関節(hierarchy)の名前
+		string[] handJointsName = new string[7] {   "Leap Rig", "Hand Models", "LoPoly Rigged Hand Left", "LoPoly Rigged Hand Right",
+													"LoPoly_Hand_Mesh_Left", "LoPoly_Hand_Mesh_Right", "Wrist" };
+		//左右
+		string[] LandR = new string[2] { "L_", "R_" };
+		//腕と各指の関節名
+		string[] fingerName = new string[6] { "Palm", "thumb", "index", "middle", "ring", "pinky" };
+		//指先の関節名
+		string[] fingerJoint = new string[5] { "_meta", "_a", "_b", "_c", "_end" };
+		GameObject[,,] fingers = new GameObject[LandR.Length, fingerName.Length, fingerJoint.Length];
+		//当たり判定のテーブル
+		//                                            meta   a      b      c      end   //Left
+		bool[,,] colliderTable = new bool[2, 6, 5]{{{ false, false, false, false, false },  //Palm      手のひら
+													{ false, false, false, false, false },  //thumb     親指
+													{ false, false, false, false, true  },  //index     人差し指
+													{ false, false, false, false, false },  //middle    中指
+													{ false, false, false, false, false },  //ring      薬指
+													{ false, false, false, false, false },  //pinky     小指
+													 },{                                //Right
+													{ false, false, false, false, false },  //Palm      手のひら
+													{ false, false, false, false, false },  //thumb     親指
+													{ false, false, false, false, true  },  //index     人差し指
+													{ false, false, false, false, false },  //middle    中指
+													{ false, false, false, false, false },  //ring      薬指
+													{ false, false, false, false, false },  //pinky     小指
+													 } };
+
 		for (int LR = 0; LR < LandR.Length; LR++) {
 			GameObject hand;
 			//リグを取得
-			hand = GameObject.Find("Leap Rig");
+			hand = GameObject.Find(handJointsName[0]);
 			//リグの下の手を取得
-			hand = hand.transform.Find("Hand Models").gameObject;
-			if (LR == 0) {
-				hand = hand.transform.Find("LoPoly Rigged Hand Left").gameObject;
-				//手の描画の可否
-				handRenderer[LR] = hand.transform.Find("LoPoly_Hand_Mesh_Left").GetComponent<SkinnedMeshRenderer>();
-				handRenderer[LR].enabled = doRenderLeapHands;
-			} else {
-				hand = hand.transform.Find("LoPoly Rigged Hand Right").gameObject;
-				//手の描画の可否
-				handRenderer[LR] = hand.transform.Find("LoPoly_Hand_Mesh_Right").GetComponent<SkinnedMeshRenderer>();
-				handRenderer[LR].enabled = doRenderLeapHands;
-			}
+			hand = hand.transform.Find(handJointsName[1]).gameObject;
+			hand = hand.transform.Find(handJointsName[2 + LR]).gameObject;
+			//手の描画の可否
+			hand.transform.Find(handJointsName[4 + LR]).GetComponent<SkinnedMeshRenderer>().enabled = doRenderHands;
 			//ローポリハンドのの下の腕を取得
-			hand = hand.transform.Find(LandR[LR] + "_Wrist").gameObject;
+			hand = hand.transform.Find(LandR[LR] + handJointsName[6]).gameObject;
 			//腕の下の手のひらを取得
-			hand = hand.transform.Find(LandR[LR] + "_Palm").gameObject;
-
-			/* 以下一行バージョン */
-			//if (LR == 0)
-			//    hand = GameObject.Find("Leap Rig").transform.Find("Hand Models").transform.Find("LoPoly Rigged Hand Left").transform.Find(LandR[LR] + "_Wrist").transform.Find(LandR[LR] + "_Palm").gameObject;
-			//else
-			//    hand = GameObject.Find("Leap Rig").transform.Find("Hand Models").transform.Find("LoPoly Rigged Hand Right").transform.Find(LandR[LR] + "_Wrist").transform.Find(LandR[LR] + "_Palm").gameObject;
-			/* 以下一行バージョン 終 */
+			hand = hand.transform.Find(LandR[LR] + fingerName[0]).gameObject;
 
 			//行列に保存
 			fingers[LR, 0, 0] = hand;
@@ -103,113 +96,178 @@ public class CreatePointerManager : MonoBehaviour {
 				GameObject fingerParent = fingers[LR, 0, 0];
 				for (int Joint = 0; Joint < fingerJoint.Length; Joint++) {
 					//L_thumb_cとR_thumb_cは存在しないので飛ばす
-					if (fingerName[Name] == "thumb" && fingerJoint[Joint] == "c")
-						Joint++;
+					if (Name == 5 && Joint == 3) {
+						//なにもしない
+					} else {
+						//目的の部分を見つける
+						GameObject target = fingerParent.transform.Find(LandR[LR] + fingerName[Name] + fingerJoint[Joint]).gameObject;
 
-					//目的の部分を見つける
-					GameObject target = fingerParent.transform.Find(LandR[LR] + "_" + fingerName[Name] + "_" + fingerJoint[Joint]).gameObject;
-					//マーカー用球体を作る
-					GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-					//大きさ
-					sphere.transform.localScale = pointerScale;
-					//当たり判定
-					sphere.GetComponent<SphereCollider>().radius = pointerColRad;
-					//場所は目的部分のところ
-					sphere.transform.position = target.transform.position;
-					//部分を親に
-					sphere.transform.parent = target.transform;
-					//名前は親にちなむ
-					sphere.name = target.name + "Pointer";
-					//当たり判定用に
-					Rigidbody rigidbody = sphere.AddComponent<Rigidbody>();
-					//重力は消す
-					rigidbody.useGravity = false;
-					//回転や移動もなし
-					rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-					//今の目的部分を次の親にする
-					fingerParent = target;
-					//配列に保存
-					fingers[LR, Name, Joint] = target;
-					fingersRenderer[LR, Name, Joint] = sphere.GetComponent<MeshRenderer>();
-					fingersRenderer[LR, Name, Joint].enabled = doRenderSphere;
-				}
-			}
-			//指先に当たり判定スクリプトをアタッチ
+						GameObject sphere = putSphere(target);
 
-			//人差指先にアタッチ
-			//GameObject indexPointer = fingers[LR, 1, 4].transform.Find(fingers[LR, 1, 4].name + "Pointer").gameObject;
-			//indexPointer.AddComponent<fingerFeelCollider>();
-			//indexPointer.GetComponent<SphereCollider>().isTrigger = true;
-		}
+						//指先に当たり判定スクリプトをアタッチ
+						//人差指先にアタッチ
+						//当たり判定
+						sphere.GetComponent<SphereCollider>().enabled = colliderTable[LR, Name, Joint];
+						if (colliderTable[LR, Name, Joint] == true) {
+							sphere.GetComponent<SphereCollider>().radius = pointerColRad;
+							sphere.GetComponent<SphereCollider>().isTrigger = true;
+							sphere.AddComponent<fingerFeelCollider>();
+						}
+						//表示の可否
+						sphere.GetComponent<MeshRenderer>().enabled = doRenderSphere || ( forceRenderColliderSphere && colliderTable[LR, Name, Joint] );
 
-		//ピンチ用スクリプトの初期化
-		GetComponent<ObjTransRota>().SetThumbAndIndex(fingers[0, 5, 4],
-													  fingers[1, 5, 4],
-													  fingers[0, 1, 4],
-													  fingers[1, 1, 4]);
-		/* 左手親指先
-         * 右手親指先
-         * 左手人差指先
-         * 右手人差指先
-         */
-		variables.fingers[0] = fingers[0, 1, 4];
-		variables.fingers[1] = fingers[1, 1, 4];
-	}
-
-	void Update() {
-		//１フレーム目で本スクリプトを削除
-		//Destroy(this);
-		//再計算をする必要があるか
-		if (needReCulc)
-			RenderReCulc();
-	}
-
-	//値変更時に中身を再度計算
-	private void OnValidate() {
-		needReCulc = true;
-	}
-
-	private void RenderReCulc() {
-		//エラー対策
-		if (fingers == null)
-			return;
-
-		for (int LR = 0; LR < LandR.Length; LR++) {
-			handRenderer[LR].enabled = doRenderLeapHands;
-			for (int Name = 1; Name < fingerName.Length; Name++) {
-				for (int Joint = 0; Joint < fingerJoint.Length; Joint++) {
-					//エラー対策
-					try {
-						fingersRenderer[LR, Name, Joint].enabled = doRenderSphere;
-					} catch {
-						//エラーが出たらなにもしない
+						//配列に保存
+						fingers[LR, Name, Joint] = target;
 					}
 				}
 			}
 		}
-		//再計算の必要性なし
-		needReCulc = false;
+
+		//ピンチ用スクリプトの初期化
+		GetComponent<ObjTransRota>().SetThumbAndIndex(fingers[0, 1, 4],
+													  fingers[1, 1, 4],
+													  fingers[0, 2, 4],
+													  fingers[1, 2, 4]);
+		/* 左手親指先
+		 * 右手親指先
+		 * 左手人差指先
+		 * 右手人差指先
+		 */
+		variables.fingers[0] = fingers[0, 2, 4];
+		variables.fingers[1] = fingers[1, 2, 4];
 	}
 
-	private void IntializeViveControlor() {
+	private void InitializeViveControlor() {
+		//腕より上の関節(hierarchy)の名前
 		string[] handJointsName = new string[6] { "[CameraRig]", "vr_glove_left_model_slim", "vr_glove_right_model_slim", "slim_l", "slim_r", "Root" };
+		//腕と各指の関節名
 		string[] fingerJointsName = new string[6] { "wrist_r", "finger_thumb", "finger_index", "finger_middle", "finger_ring", "finger_pinky" };
+		//指先の関節名
 		string[] level = new string[5] { "_meta_r", "_0_r", "_1_r", "_2_r", "_r_end" };
+		GameObject[,,] fingers = new GameObject[2, fingerJointsName.Length, level.Length];
+		//当たり判定のテーブル
+		//                                        _meta_r _0_r   _1_r   _2_r   _r_end
+		bool[,] colliderTable = new bool[6, 5]{ { false,  false, false, false, false }, //wrist_r
+												{ false,  false, false, false, false }, //finger_thumb
+												{ false,  false, false, false, true  }, //finger_index
+												{ false,  false, false, false, false }, //finger_middle
+												{ false,  false, false, false, false }, //finger_ring
+												{ false,  false, false, false, false }, //finger_pinky
+		};
 
 		//[CameraRig]オブジェクトを検索・取得
 		GameObject cameraRig = GameObject.Find(handJointsName[0]);
 
 		//目的地に向けての目印オブジェクトを作成
-		GameObject objBookmark = null;
+		//腕位置
+		GameObject objBookmark_wrist_r = null;
+		//腕より下の作業中の位置
+		GameObject objBookmarkTip = null;
 
-		//左手の初期化
-		objBookmark = cameraRig.transform.Find(handJointsName[1]).gameObject;
-		objBookmark = objBookmark.transform.Find(handJointsName[3]).gameObject;
-		objBookmark = objBookmark.transform.Find(handJointsName[5]).gameObject;
+		//両手それぞれ実施
+		for (int i = 0; i < 2; i++) {
+			//目印オブジェクトの初期化
+			//名前が変わるところをiで変更している。
+			objBookmark_wrist_r = cameraRig.transform.Find(handJointsName[1 + i]).gameObject;
+			objBookmark_wrist_r = objBookmark_wrist_r.transform.Find(handJointsName[3 + i]).gameObject;
+			//初期化ついでに手のモデルの表示可否設定
+			objBookmark_wrist_r.transform.Find("vr_glove_right_slim").GetComponent<SkinnedMeshRenderer>().enabled = doRenderHands;
+			//初期化の続き
+			objBookmark_wrist_r = objBookmark_wrist_r.transform.Find(handJointsName[5]).gameObject;
 
-		GameObject target = null;
-		for (int i = 0; i < fingerJointsName.Length; i++) {
+			//ターゲットオブジェクトの初期化
+			GameObject target = null;
+			for (int j = 0; j < fingerJointsName.Length; j++) {
+				//作業位置を腕の位置にする
+				objBookmarkTip = objBookmark_wrist_r;
+				for (int k = 0; k < level.Length; k++) {
+					GameObject sphere = null;
+					if (j == 0) {
+						//腕は一か所のみ配置して終わり
+						if (k == 0) {
+							target = objBookmarkTip.transform.Find(fingerJointsName[j]).gameObject;
+							putSphere(target);
+							objBookmarkTip = objBookmark_wrist_r = target;
+						}
+					} else if (j == 1) {
+						//親指には_meta_rがいないので飛ばす
+						if (k != 0) {
+							// Debug.Log(objBookmarkTip.transform.Find(fingerJointsName[j] + level[k]).gameObject.name);
+							target = objBookmarkTip.transform.Find(fingerJointsName[j] + level[k]).gameObject;
+							sphere = putSphere(target);
+							objBookmarkTip = target;
+							//指先に当たり判定スクリプトをアタッチ
+							//人差指先にアタッチ
+							//当たり判定
+							sphere.GetComponent<SphereCollider>().enabled = colliderTable[j, k];
+							if (colliderTable[j, k] == true) {
+								sphere.GetComponent<SphereCollider>().radius = pointerColRad;
+								sphere.GetComponent<SphereCollider>().isTrigger = true;
+								sphere.AddComponent<fingerFeelCollider>();
+							}
+							//表示の可否
+							sphere.GetComponent<MeshRenderer>().enabled = doRenderSphere || ( forceRenderColliderSphere && colliderTable[j, k] );
 
+							//配列に保存
+							fingers[i, j, k] = sphere;
+						}
+					} else {
+						target = objBookmarkTip.transform.Find(fingerJointsName[j] + level[k]).gameObject;
+						sphere = putSphere(target);
+						objBookmarkTip = target;
+						//指先に当たり判定スクリプトをアタッチ
+						//人差指先にアタッチ
+						//当たり判定
+						sphere.GetComponent<SphereCollider>().enabled = colliderTable[j, k];
+						if (colliderTable[j, k] == true) {
+							sphere.GetComponent<SphereCollider>().radius = pointerColRad;
+							sphere.GetComponent<SphereCollider>().isTrigger = true;
+							sphere.AddComponent<fingerFeelCollider>();
+						}
+						//表示の可否
+						sphere.GetComponent<MeshRenderer>().enabled = doRenderSphere || ( forceRenderColliderSphere && colliderTable[j, k] );
+
+						//配列に保存
+						fingers[i, j, k] = sphere;
+					}
+				}
+			}
 		}
+
+		//ピンチ用スクリプトの初期化
+		GetComponent<ObjTransRota>().SetThumbAndIndex(fingers[0, 1, 4],
+													  fingers[1, 1, 4],
+													  fingers[0, 2, 4],
+													  fingers[1, 2, 4]);
+		/* 左手親指先
+		 * 右手親指先
+		 * 左手人差指先
+		 * 右手人差指先
+		 */
+		variables.fingers[0] = fingers[0, 2, 4];
+		variables.fingers[1] = fingers[1, 2, 4];
+	}
+
+	private GameObject putSphere(GameObject target) {
+		//マーカー用球体を作る
+		GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+		//大きさ
+		sphere.transform.localScale = new Vector3(pointerScale, pointerScale, pointerScale);
+		//場所は目的部分のところ
+		sphere.transform.position = target.transform.position;
+		//部分を親に
+		sphere.transform.parent = target.transform;
+		//名前は親にちなむ
+		sphere.name = target.name + "_Pointer";
+		//当たり判定用に
+		Rigidbody rigidbody = sphere.AddComponent<Rigidbody>();
+		//重力は消す
+		rigidbody.useGravity = false;
+		//回転や移動もなし
+		rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+		//今の目的部分を次の親にする
+		sphere.transform.parent = target.transform;
+
+		return sphere;
 	}
 }
