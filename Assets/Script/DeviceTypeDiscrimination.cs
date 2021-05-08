@@ -31,72 +31,96 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 		if (false) {
 			//LeapMotionが刺さっている
 			isLeapmotionConnected = true;
+			Debug.Log("Leapmotion connected");
 		} else {
 			//LeapMotionが刺さっていない
 			isLeapmotionConnected = false;
+			Debug.Log("Leapmotion NOT connected");
 		}
 
 		// 表示デバイスがHMDかどうか（ミラーリング含む）
 		if (OVRManager.isHmdPresent) {
 			// headset connected
+			Debug.Log("HMD is present");
 		}
 
 		//デバイスがQuest1か2かPCか
 		if (SystemInfo.deviceName == "Oculus Quest") {
+			Debug.Log("Device name is Oculus Quest");
 			//Oculus Quest
-			if (false/* コントローラobjectがアクティブかどうか */) {
+			if (IsControllerActive()) {
 				variables.platformType = variables.platform_type._OculusQuest_controller;
+				Debug.Log("Use controller");
 			} else {
 				variables.platformType = variables.platform_type._OculusQuest_HandTracking;
+				Debug.Log("Use HandTracking");
 			}
 		} else if (SystemInfo.deviceName == "Oculus Quest 2") {
+			Debug.Log("Device name is Oculus Quest 2");
 			//Oculus Quest 2
-			if (false/* コントローラobjectがアクティブかどうか */) {
+			if (IsControllerActive()) {
 				variables.platformType = variables.platform_type._OculusQuest_controller;
+				Debug.Log("Use controller");
 			} else {
 				variables.platformType = variables.platform_type._OculusQuest_HandTracking;
+				Debug.Log("Use HandTracking");
 			}
 		} else {
 			//PC
 			try {
 				if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
+					Debug.Log("HMD name is lighthouse(VIVE CE)");
 					//HTC Vive
 					if (isLeapmotionConnected) {
 						variables.platformType = variables.platform_type._VIVE_LeapMotion;
-					} else if (false/* コントローラobjectがアクティブかどうか */) {
+						Debug.Log("Use LeapMotion");
+					} else if (IsControllerActive()) {
 						variables.platformType = variables.platform_type._VIVE_Controller;
+						Debug.Log("Use controller");
 					} else {
 						variables.platformType = variables.platform_type._VIVE_HandTracking;
+						Debug.Log("Use HandTracking");
 					}
 				} else if (SteamVR.instance.hmd_TrackingSystemName == "oculus") {
+					Debug.Log("HMD name is Oculus(Oculus rift)");
 					//Oculus Rift
 					if (isLeapmotionConnected) {
 						variables.platformType = variables.platform_type._OculusRift_LeapMotion;
-					} else if (false/* コントローラobjectがアクティブかどうか */) {
+						Debug.Log("Use LeapMotion");
+					} else if (IsControllerActive()) {
 						variables.platformType = variables.platform_type._OculusRift_Controller;
+						Debug.Log("Use controller");
 					} else {
 						variables.platformType = variables.platform_type._OculusRift_HandTracking;
+						Debug.Log("Use HandTracking");
 					}
 				} else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
+					Debug.Log("HMD name is vive_eyes(VIVE Cosmos)");
 					//VIVE Cosmos
 					if (isLeapmotionConnected) {
 						variables.platformType = variables.platform_type._Cosmos_LeapMotion;
-					} else if (false/* コントローラobjectがアクティブかどうか */) {
+						Debug.Log("Use LeapMotion");
+					} else if (IsControllerActive()) {
 						variables.platformType = variables.platform_type._Cosmos_Controller;
+						Debug.Log("Use controller");
 					} else {
 						variables.platformType = variables.platform_type._Cosmos_HandTracking;
+						Debug.Log("Use HandTracking");
 					}
 				} else {
 					//other devices
 					variables.platformType = variables.platform_type._OtherHMD;
+					Debug.Log("HMD is Other device");
 				}
 
 			} catch (System.Exception) {
 				//VRデバイスが刺さってない
 				if (isLeapmotionConnected) {
 					variables.platformType = variables.platform_type._NonVR_LeapMotion;
+					Debug.Log("Use LeapMotion");
 				} else {
 					variables.platformType = variables.platform_type._NonVR_Mouse;
+					Debug.Log("Use Mouse");
 				}
 				throw;
 			}
