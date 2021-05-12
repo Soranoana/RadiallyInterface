@@ -154,4 +154,21 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 		}
 		return false;
 	}
+
+	//variablesスクリプトのheadObjectを初期化する。
+	private void InitializeHeadObject() {
+		if (SystemInfo.deviceName == "Oculus Quest") {
+
+		} else if (SystemInfo.deviceName == "Oculus Quest 2") {
+
+		} else if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
+			variables.headObject = GameObject.Find("[CameraRig]");
+		} else if (SteamVR.instance.hmd_TrackingSystemName == "oculus") {
+
+		} else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
+
+		} else {
+			variables.headObject = GameObject.Find("[CameraRig]");
+		}
+	}
 }

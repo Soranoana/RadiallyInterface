@@ -86,13 +86,19 @@ public class ObjTransRota : MonoBehaviour {
 		}
 
 		if (isLPinch) {
+			Debug.Log("run");
 			//L人差し指位置にシステムを配置
 			targetObject.transform.position = LIndex.transform.position + new Vector3(0, 0, variables.pinchDistance);
+			targetObject.transform.LookAt(variables.headObject.transform);
 			variables.isLeftHandLastTouch = true;
+			Debug.Log("run2");
 		} else if (isRPinch) {
+			Debug.Log("run");
 			//R人差し指位置にシステムを配置
 			targetObject.transform.position = RIndex.transform.position + new Vector3(0, 0, variables.pinchDistance);
+			targetObject.transform.LookAt(variables.headObject.transform);
 			variables.isLeftHandLastTouch = false;
+			Debug.Log("run2");
 		}
 	}
 
@@ -126,6 +132,7 @@ public class ObjTransRota : MonoBehaviour {
 		} else if (isRPinch) {
 			//R人差し指位置にシステムを配置
 			targetObject.transform.position = RIndex.transform.position + new Vector3(0, 0, variables.pinchDistance);
+			targetObject.transform.LookAt(variables.headObject.transform);
 			variables.isLeftHandLastTouch = false;
 		}
 	}
