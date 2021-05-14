@@ -24,6 +24,9 @@ using Valve.VR;
 //VRデバイスの名前を確認し、variablesに保存する。
 
 public class DeviceTypeDiscrimination : MonoBehaviour {
+	private void Awake() {
+		InitializeHeadObject();
+	}
 	void Start() {
 
 		bool isLeapmotionConnected;
@@ -162,13 +165,14 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 		} else if (SystemInfo.deviceName == "Oculus Quest 2") {
 
 		} else if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
-			variables.headObject = GameObject.Find("[CameraRig]");
+			variables.headObject = GameObject.Find("[CameraRig]").transform.Find("Camera").gameObject;
 		} else if (SteamVR.instance.hmd_TrackingSystemName == "oculus") {
 
 		} else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
+			variables.headObject = GameObject.Find("[CameraRig]").transform.Find("Camera").gameObject;
 
 		} else {
-			variables.headObject = GameObject.Find("[CameraRig]");
+			variables.headObject = GameObject.Find("[CameraRig]").transform.Find("Camera").gameObject;
 		}
 	}
 }

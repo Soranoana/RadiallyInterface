@@ -68,7 +68,7 @@ public class ObjTransRota : MonoBehaviour {
 			if (!LThumb.activeInHierarchy) {
 				isLPinch = false;
 			} else if (action_Boolean.GetState(leftHand)) {
-				Debug.Log("Grab!");
+				Debug.Log("Grab!L");
 				isLPinch = true;
 			} else {
 				isLPinch = false;
@@ -79,6 +79,7 @@ public class ObjTransRota : MonoBehaviour {
 			if (!RThumb.activeInHierarchy) {
 				isRPinch = false;
 			} else if (action_Boolean.GetState(rightHand)) {
+				Debug.Log("Grab!R");
 				isRPinch = true;
 			} else {
 				isRPinch = false;
@@ -90,6 +91,7 @@ public class ObjTransRota : MonoBehaviour {
 			//L人差し指位置にシステムを配置
 			targetObject.transform.position = LIndex.transform.position + new Vector3(0, 0, variables.pinchDistance);
 			targetObject.transform.LookAt(variables.headObject.transform);
+			targetObject.transform.Rotate(new Vector3(0f, -180f, 0f));
 			variables.isLeftHandLastTouch = true;
 			Debug.Log("run2");
 		} else if (isRPinch) {
@@ -97,6 +99,7 @@ public class ObjTransRota : MonoBehaviour {
 			//R人差し指位置にシステムを配置
 			targetObject.transform.position = RIndex.transform.position + new Vector3(0, 0, variables.pinchDistance);
 			targetObject.transform.LookAt(variables.headObject.transform);
+			targetObject.transform.Rotate(new Vector3(0f, -180f, 0f));
 			variables.isLeftHandLastTouch = false;
 			Debug.Log("run2");
 		}
@@ -127,12 +130,18 @@ public class ObjTransRota : MonoBehaviour {
 		if (isLPinch) {
 			//L人差し指位置にシステムを配置
 			targetObject.transform.position = LIndex.transform.position + new Vector3(0, 0, variables.pinchDistance);
+
 			targetObject.transform.LookAt(variables.headObject.transform);
+			targetObject.transform.Rotate(new Vector3(-90f, -180f, 0f));
+
 			variables.isLeftHandLastTouch = true;
 		} else if (isRPinch) {
 			//R人差し指位置にシステムを配置
 			targetObject.transform.position = RIndex.transform.position + new Vector3(0, 0, variables.pinchDistance);
+
 			targetObject.transform.LookAt(variables.headObject.transform);
+			targetObject.transform.Rotate(new Vector3(-90f, -180f, 0f));
+
 			variables.isLeftHandLastTouch = false;
 		}
 	}
