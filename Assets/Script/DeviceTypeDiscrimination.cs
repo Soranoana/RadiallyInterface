@@ -24,6 +24,32 @@ using Valve.VR;
 //VRデバイスの名前を確認し、variablesに保存する。
 
 public class DeviceTypeDiscrimination : MonoBehaviour {
+
+	enum RunMode {
+		Auto,
+		Oculus_Quest,
+		Oculus_Quest_2,
+		VIVE_CE,
+		VIVE_Cosmos,
+		Oculus_rift,
+		Other_headset,
+		Non_VR,
+	}
+
+	enum InputDevice {
+		Auto,
+		Controller,
+		Hand_tracking,
+		Leapmotion,
+		Mouse,
+	}
+
+	[SerializeField]
+	private RunMode runMode;
+
+	[SerializeField]
+	private InputDevice inputDevice;
+
 	private void Awake() {
 		InitializeHeadObject();
 	}
@@ -160,19 +186,79 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 
 	//variablesスクリプトのheadObjectを初期化する。
 	private void InitializeHeadObject() {
-		if (SystemInfo.deviceName == "Oculus Quest") {
-
-		} else if (SystemInfo.deviceName == "Oculus Quest 2") {
-
-		} else if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
+		//デバイス判定
+		if (runMode == RunMode.Auto) {
+			if (XRSettings.loadedDeviceName == "oculus display") {
+				OVRPlugin.SystemHeadset headset = OVRPlugin.GetSystemHeadsetType();
+				if (headset == OVRPlugin.SystemHeadset.Oculus_Link_Quest) {
+					runMode = RunMode.Oculus_Quest;
+					// Debug.Log("Oculus_Link_Quest");
+				} else if (headset == OVRPlugin.SystemHeadset.Oculus_Link_Quest_2) {
+					runMode = RunMode.Oculus_Quest_2;
+					// Debug.Log("Oculus_Link_Quest_2");
+				} else if (headset == OVRPlugin.SystemHeadset.Oculus_Quest) {
+					runMode = RunMode.Oculus_Quest;
+					// Debug.Log("Oculus_Quest");
+				} else if (headset == OVRPlugin.SystemHeadset.Oculus_Quest_2) {
+					runMode = RunMode.Oculus_Quest_2;
+					// Debug.Log("Oculus_Quest_2");
+				} else if (headset == OVRPlugin.SystemHeadset.Rift_CB ||
+							headset == OVRPlugin.SystemHeadset.Rift_CV1 ||
+							headset == OVRPlugin.SystemHeadset.Rift_DK1 ||
+							headset == OVRPlugin.SystemHeadset.Rift_DK2 ||
+							headset == OVRPlugin.SystemHeadset.Rift_S) {
+					runMode = RunMode.Oculus_rift;
+					// Debug.Log("Oculus_rift");
+				} else {
+					runMode = RunMode.Other_headset;
+				}
+			} else {
+				if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
+					runMode = RunMode.VIVE_CE;
+				} else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
+					runMode = RunMode.VIVE_Cosmos;
+				} else {
+					runMode = RunMode.Non_VR;
+				}
+			}
+		}
+		//ヘッドセット初期化
+		if (runMode == RunMode.Oculus_Quest) {
+			variables.headObject = GameObject.Find("OVRCameraRig").transform.Find("CenterEyeAnchor").gameObject;
+		} else if (runMode == RunMode.Oculus_Quest_2) {
+			variables.headObject = GameObject.Find("OVRCameraRig").transform.Find("CenterEyeAnchor").gameObject;
+		} else if (runMode == RunMode.VIVE_CE) {
 			variables.headObject = GameObject.Find("[CameraRig]").transform.Find("Camera").gameObject;
-		} else if (SteamVR.instance.hmd_TrackingSystemName == "oculus") {
-
-		} else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
+		} else if (runMode == RunMode.Oculus_rift) {
+			variables.headObject = GameObject.Find("OVRCameraRig").transform.Find("CenterEyeAnchor").gameObject;
+		} else if (runMode == RunMode.VIVE_Cosmos) {
 			variables.headObject = GameObject.Find("[CameraRig]").transform.Find("Camera").gameObject;
-
 		} else {
 			variables.headObject = GameObject.Find("[CameraRig]").transform.Find("Camera").gameObject;
+		}
+	}
+
+	private void InitializeInputDevice() {
+
+		//Leapmotion対応はまだ先
+		// bool connectedLeapmtion;
+
+		if (inputDevice == InputDevice.Auto) {
+			if (runMode == RunMode.Non_VR) {
+				inputDevice = InputDevice.Mouse;
+			} else if (runMode == RunMode.Oculus_Quest) {
+
+			} else if (runMode == RunMode.Oculus_Quest_2) {
+
+			} else if (runMode == RunMode.VIVE_CE) {
+
+			} else if (runMode == RunMode.Oculus_rift) {
+
+			} else if (runMode == RunMode.VIVE_Cosmos) {
+
+			} else {
+
+			}
 		}
 	}
 }

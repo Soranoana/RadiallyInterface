@@ -59,7 +59,7 @@ public class ObjTransRota : MonoBehaviour {
 	}
 
 	void Update() {
-		processingForViveControlor();
+		//processingForViveControlor();
 		//processingForViveLeapmotion();
 	}
 	private void processingForViveControlor() {

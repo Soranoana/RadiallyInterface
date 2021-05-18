@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scene/TypingSoftware/test.unity
     guid: e41e13796554df64a99eb44167cd4086
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/CircleInterface/CircleInterface.unity
     guid: 4ba648660e603cc4f855c1138c289cb6
   - enabled: 0
@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scene/RadiallyInterface/TrianglePole.unity
     guid: d788ba706346ee74ab8f8973f97e464f
+  - enabled: 1
+    path: Assets/Scene/CircleInterface/CircleInterfaceSteamVR.unity
+    guid: 6254663c749ed124587354d54497a30f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 2f3f09b7db4fca9459bb952e528718f6,
       type: 2}
