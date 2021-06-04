@@ -22,9 +22,12 @@
 
 完成しているもの
     VIVE+LeapMotion（Masterブランチ）
+    VIVEコントローラ（project-Oculus&VIVE）
+        直近目標
+            とりあえず動くものを作る
 
 着手中
-    VIVEコントローラ（project-Oculus&VIVE）
+    Questコントローラ
         直近目標
             とりあえず動くものを作る
 

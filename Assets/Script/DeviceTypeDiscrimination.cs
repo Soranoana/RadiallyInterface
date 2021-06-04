@@ -25,6 +25,7 @@ using Valve.VR;
 
 public class DeviceTypeDiscrimination : MonoBehaviour {
 
+	//動作させるVRデバイス
 	enum RunMode {
 		Auto,
 		Oculus_Quest,
@@ -36,6 +37,7 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 		Non_VR,
 	}
 
+	//動作させるコントローラ
 	enum InputDevice {
 		Auto,
 		Controller,
@@ -49,6 +51,7 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 
 	[SerializeField]
 	private InputDevice inputDevice;
+
 
 	private void Awake() {
 		InitializeHeadObject();
@@ -224,13 +227,13 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 		}
 		//ヘッドセット初期化
 		if (runMode == RunMode.Oculus_Quest) {
-			variables.headObject = GameObject.Find("OVRCameraRig").transform.Find("CenterEyeAnchor").gameObject;
+			variables.headObject = GameObject.Find("OVRCameraRig").transform.Find("TrackingSpace").transform.Find("CenterEyeAnchor").gameObject;
 		} else if (runMode == RunMode.Oculus_Quest_2) {
-			variables.headObject = GameObject.Find("OVRCameraRig").transform.Find("CenterEyeAnchor").gameObject;
+			variables.headObject = GameObject.Find("OVRCameraRig").transform.Find("TrackingSpace").transform.Find("CenterEyeAnchor").gameObject;
 		} else if (runMode == RunMode.VIVE_CE) {
 			variables.headObject = GameObject.Find("[CameraRig]").transform.Find("Camera").gameObject;
 		} else if (runMode == RunMode.Oculus_rift) {
-			variables.headObject = GameObject.Find("OVRCameraRig").transform.Find("CenterEyeAnchor").gameObject;
+			variables.headObject = GameObject.Find("OVRCameraRig").transform.Find("TrackingSpace").transform.Find("CenterEyeAnchor").gameObject;
 		} else if (runMode == RunMode.VIVE_Cosmos) {
 			variables.headObject = GameObject.Find("[CameraRig]").transform.Find("Camera").gameObject;
 		} else {
