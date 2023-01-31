@@ -18,7 +18,7 @@ using UnityEngine;
 using OVR.OpenVR;
 using OVR;
 using UnityEngine.XR;
-using UnityEngine.VR;
+// using UnityEngine.VR;
 using Valve.VR;
 
 //VRデバイスの名前を確認し、variablesに保存する。
