@@ -30,11 +30,11 @@ EditorBuildSettings:
     path: Assets/Scene/CircleInterface/CircleInterfaceSteamVR.unity
     guid: 6254663c749ed124587354d54497a30f
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 2f3f09b7db4fca9459bb952e528718f6,
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f5a80754c383d504aa29d13d4f6fb83e,
       type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 5f37ec96f38e99f4781c42e92113190c,
       type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: f56af1c598d53dc47883deefe05e3c1c,
       type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 7d83aa3a1329c744cbd4852f440825d0,
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8721e5e244a223d41be40e6dc217914e,
       type: 2}
