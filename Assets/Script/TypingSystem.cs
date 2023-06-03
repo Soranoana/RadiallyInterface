@@ -83,10 +83,13 @@ public class TypingSystem : MonoBehaviour {
 	//一覧のテキストファイルから読み込んで変数に格納
 	void taskReady() {
 		//wordファイルの場所
+		string filePath;
 #if UNITY_EDITOR
-		string filePath = Application.dataPath + "/word.txt";
+		filePath = Application.dataPath + "/word.txt";
 #elif UNITY_STANDALONE_WIN
-        string filePath = Application.dataPath + "/../word.txt";
+        filePath = Application.dataPath + "/../word.txt";
+#else
+        filePath = Application.dataPath + "/word.txt";
 #endif
 		FileInfo fi = new FileInfo(filePath);
 		//stream reader 初期化
