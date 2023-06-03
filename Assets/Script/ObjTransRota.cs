@@ -15,7 +15,7 @@
 //using System.Collections;
 //using System.Collections.Generic;
 using UnityEngine;
-using Valve.VR;
+// using Valve.VR;
 
 /* 指の接触を検知し、ピンチとして動作する
  * ピンチ時には、
@@ -27,12 +27,12 @@ using Valve.VR;
 
 public class ObjTransRota : MonoBehaviour {
 
-	[SerializeField]
-	private SteamVR_Input_Sources leftHand;
-	[SerializeField]
-	private SteamVR_Input_Sources rightHand;
-	[SerializeField]
-	private SteamVR_Action_Boolean action_Boolean;
+	// [SerializeField]
+	// private SteamVR_Input_Sources leftHand;
+	// [SerializeField]
+	// private SteamVR_Input_Sources rightHand;
+	// [SerializeField]
+	// private SteamVR_Action_Boolean action_Boolean;
 
 	private GameObject LThumb;
 	private GameObject RThumb;
@@ -67,9 +67,9 @@ public class ObjTransRota : MonoBehaviour {
 		if (!isRPinch) {
 			if (!LThumb.activeInHierarchy) {
 				isLPinch = false;
-			} else if (action_Boolean.GetState(leftHand)) {
-				Debug.Log("Grab!L");
-				isLPinch = true;
+				// } else if (action_Boolean.GetState(leftHand)) {
+				// 	Debug.Log("Grab!L");
+				// 	isLPinch = true;
 			} else {
 				isLPinch = false;
 			}
@@ -78,9 +78,9 @@ public class ObjTransRota : MonoBehaviour {
 		if (!isLPinch) {
 			if (!RThumb.activeInHierarchy) {
 				isRPinch = false;
-			} else if (action_Boolean.GetState(rightHand)) {
-				Debug.Log("Grab!R");
-				isRPinch = true;
+				// } else if (action_Boolean.GetState(rightHand)) {
+				// 	Debug.Log("Grab!R");
+				// 	isRPinch = true;
 			} else {
 				isRPinch = false;
 			}

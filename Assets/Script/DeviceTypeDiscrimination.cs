@@ -19,7 +19,7 @@ using OVR.OpenVR;
 using OVR;
 using UnityEngine.XR;
 // using UnityEngine.VR;
-using Valve.VR;
+// using Valve.VR;
 
 //VRデバイスの名前を確認し、variablesに保存する。
 
@@ -100,50 +100,50 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 		} else {
 			//PC
 			try {
-				if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
-					Debug.Log("HMD name is lighthouse(VIVE CE)");
-					//HTC Vive
-					if (isLeapmotionConnected) {
-						variables.platformType = variables.platform_type._VIVE_LeapMotion;
-						Debug.Log("Use LeapMotion");
-					} else if (IsControllerActive()) {
-						variables.platformType = variables.platform_type._VIVE_Controller;
-						Debug.Log("Use controller");
-					} else {
-						variables.platformType = variables.platform_type._VIVE_HandTracking;
-						Debug.Log("Use HandTracking");
-					}
-				} else if (SteamVR.instance.hmd_TrackingSystemName == "oculus") {
-					Debug.Log("HMD name is Oculus(Oculus rift)");
-					//Oculus Rift
-					if (isLeapmotionConnected) {
-						variables.platformType = variables.platform_type._OculusRift_LeapMotion;
-						Debug.Log("Use LeapMotion");
-					} else if (IsControllerActive()) {
-						variables.platformType = variables.platform_type._OculusRift_Controller;
-						Debug.Log("Use controller");
-					} else {
-						variables.platformType = variables.platform_type._OculusRift_HandTracking;
-						Debug.Log("Use HandTracking");
-					}
-				} else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
-					Debug.Log("HMD name is vive_eyes(VIVE Cosmos)");
-					//VIVE Cosmos
-					if (isLeapmotionConnected) {
-						variables.platformType = variables.platform_type._Cosmos_LeapMotion;
-						Debug.Log("Use LeapMotion");
-					} else if (IsControllerActive()) {
-						variables.platformType = variables.platform_type._Cosmos_Controller;
-						Debug.Log("Use controller");
-					} else {
-						variables.platformType = variables.platform_type._Cosmos_HandTracking;
-						Debug.Log("Use HandTracking");
-					}
-				} else {
-					//other devices
-					variables.platformType = variables.platform_type._OtherHMD;
-					Debug.Log("HMD is Other device");
-				}
+				// if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
+				// 	Debug.Log("HMD name is lighthouse(VIVE CE)");
+				// 	//HTC Vive
+				// 	if (isLeapmotionConnected) {
+				// 		variables.platformType = variables.platform_type._VIVE_LeapMotion;
+				// 		Debug.Log("Use LeapMotion");
+				// 	} else if (IsControllerActive()) {
+				// 		variables.platformType = variables.platform_type._VIVE_Controller;
+				// 		Debug.Log("Use controller");
+				// 	} else {
+				// 		variables.platformType = variables.platform_type._VIVE_HandTracking;
+				// 		Debug.Log("Use HandTracking");
+				// 	}
+				// } else if (SteamVR.instance.hmd_TrackingSystemName == "oculus") {
+				// 	Debug.Log("HMD name is Oculus(Oculus rift)");
+				// 	//Oculus Rift
+				// 	if (isLeapmotionConnected) {
+				// 		variables.platformType = variables.platform_type._OculusRift_LeapMotion;
+				// 		Debug.Log("Use LeapMotion");
+				// 	} else if (IsControllerActive()) {
+				// 		variables.platformType = variables.platform_type._OculusRift_Controller;
+				// 		Debug.Log("Use controller");
+				// 	} else {
+				// 		variables.platformType = variables.platform_type._OculusRift_HandTracking;
+				// 		Debug.Log("Use HandTracking");
+				// 	}
+				// } else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
+				// 	Debug.Log("HMD name is vive_eyes(VIVE Cosmos)");
+				// 	//VIVE Cosmos
+				// 	if (isLeapmotionConnected) {
+				// 		variables.platformType = variables.platform_type._Cosmos_LeapMotion;
+				// 		Debug.Log("Use LeapMotion");
+				// 	} else if (IsControllerActive()) {
+				// 		variables.platformType = variables.platform_type._Cosmos_Controller;
+				// 		Debug.Log("Use controller");
+				// 	} else {
+				// 		variables.platformType = variables.platform_type._Cosmos_HandTracking;
+				// 		Debug.Log("Use HandTracking");
+				// 	}
+				// } else {
+				//other devices
+				variables.platformType = variables.platform_type._OtherHMD;
+				Debug.Log("HMD is Other device");
+				// }
 
 			} catch (System.Exception) {
 				//VRデバイスが刺さってない
@@ -169,21 +169,22 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 
 		} else if (SystemInfo.deviceName == "Oculus Quest 2") {
 
-		} else if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
-			if (GameObject.Find("[CameraRig]").transform.Find("vr_glove_left_model_slim").gameObject.activeInHierarchy ||
-				GameObject.Find("[CameraRig]").transform.Find("vr_glove_right_model_slim").gameObject.activeInHierarchy) {
-				return true;
-			}
-			return false;
-		} else if (SteamVR.instance.hmd_TrackingSystemName == "oculus") {
-
-		} else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
-			if (GameObject.Find("[CameraRig]").transform.Find("vr_glove_left_model_slim").gameObject.activeInHierarchy ||
-					GameObject.Find("[CameraRig]").transform.Find("vr_glove_right_model_slim").gameObject.activeInHierarchy) {
-				return true;
-			}
-			return false;
 		}
+		// else if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
+		// 	if (GameObject.Find("[CameraRig]").transform.Find("vr_glove_left_model_slim").gameObject.activeInHierarchy ||
+		// 		GameObject.Find("[CameraRig]").transform.Find("vr_glove_right_model_slim").gameObject.activeInHierarchy) {
+		// 		return true;
+		// 	}
+		// 	return false;
+		// } else if (SteamVR.instance.hmd_TrackingSystemName == "oculus") {
+
+		// } else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
+		// 	if (GameObject.Find("[CameraRig]").transform.Find("vr_glove_left_model_slim").gameObject.activeInHierarchy ||
+		// 			GameObject.Find("[CameraRig]").transform.Find("vr_glove_right_model_slim").gameObject.activeInHierarchy) {
+		// 		return true;
+		// 	}
+		// 	return false;
+		// }
 		return false;
 	}
 
@@ -216,13 +217,13 @@ public class DeviceTypeDiscrimination : MonoBehaviour {
 					runMode = RunMode.Other_headset;
 				}
 			} else {
-				if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
-					runMode = RunMode.VIVE_CE;
-				} else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
-					runMode = RunMode.VIVE_Cosmos;
-				} else {
-					runMode = RunMode.Non_VR;
-				}
+				// if (SteamVR.instance.hmd_TrackingSystemName == "lighthouse") {
+				// 	runMode = RunMode.VIVE_CE;
+				// } else if (SteamVR.instance.hmd_TrackingSystemName == "vive_eyes") {
+				// 	runMode = RunMode.VIVE_Cosmos;
+				// } else {
+				runMode = RunMode.Non_VR;
+				// }
 			}
 		}
 		//ヘッドセット初期化
