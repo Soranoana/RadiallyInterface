@@ -191,7 +191,7 @@ MonoBehaviour:
     type: 2}
   SystemCommandRadius: 30
   PinchDistance: 3
-  PinchLength: 1
+  PinchLength: 1.5
   SystemTextFontSize: 3
   TrapezoidDivisionNum: 5
   LogInstance: {fileID: 72408999}
@@ -477,7 +477,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 649797716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.157, y: 0.147, z: 0.044}
+  m_LocalPosition: {x: -0.157, y: 0.204, z: 0.044}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 72408992}
@@ -1802,7 +1802,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867047668}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.157, y: 0.223, z: 0.044}
+  m_LocalPosition: {x: -0.157, y: 0.28, z: 0.044}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 72408992}
