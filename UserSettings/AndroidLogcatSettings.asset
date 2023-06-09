@@ -1,7 +1,7 @@
 {
-    "m_SelectedDeviceId": "192.168.2.103:5555",
+    "m_SelectedDeviceId": "1WMHH815GM0365",
     "m_SelectedPackage": {
-        "deviceId": "192.168.2.103:5555",
+        "deviceId": "1WMHH815GM0365",
         "name": "com.Soranoana.RadiallyInterface",
         "processId": 4544,
         "exited": false
@@ -72,6 +72,12 @@
             "deviceId": "1WMHH815GM0365",
             "name": "com.Soranoana.RadiallyInterface",
             "processId": 29702,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH815GM0365",
+            "name": "com.Soranoana.RadiallyInterface",
+            "processId": 4544,
             "exited": false
         }
     ],
