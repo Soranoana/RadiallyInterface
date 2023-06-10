@@ -116,6 +116,7 @@ public class OculusHandGetter : MonoBehaviour {
 		generate.transform.position = parent.transform.position;
 		generate.transform.parent = parent.transform;
 		Debug.Log(parent.gameObject.name);
+		DebugUIBuilder.instance.AddLabel(parent.gameObject.name);
 
 		if (parent.gameObject.name == "Hand_IndexTip") {
 			generate.AddComponent(typeof(HandTest));

@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "1WMHH815GM0365",
+    "m_SelectedDeviceId": "192.168.2.103:5555",
     "m_SelectedPackage": {
-        "deviceId": "1WMHH815GM0365",
+        "deviceId": "192.168.2.103:5555",
         "name": "com.Soranoana.RadiallyInterface",
-        "processId": 4544,
+        "processId": 13413,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -51,33 +51,57 @@
             "exited": false
         },
         {
+            "deviceId": "192.168.2.103:5555",
+            "name": "com.Soranoana.RadiallyInterface",
+            "processId": 7989,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.2.103:5555",
+            "name": "com.Soranoana.RadiallyInterface",
+            "processId": 13413,
+            "exited": false
+        },
+        {
             "deviceId": "1WMHH815GM0365",
             "name": "com.Soranoana.RadiallyInterface",
             "processId": 16629,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "1WMHH815GM0365",
             "name": "com.Soranoana.RadiallyInterface",
             "processId": 23230,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "1WMHH815GM0365",
             "name": "com.Soranoana.RadiallyInterface",
             "processId": 26993,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "1WMHH815GM0365",
             "name": "com.Soranoana.RadiallyInterface",
             "processId": 29702,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "1WMHH815GM0365",
             "name": "com.Soranoana.RadiallyInterface",
             "processId": 4544,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH815GM0365",
+            "name": "com.oculus.os.vrusb",
+            "processId": 30000,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH815GM0365",
+            "name": "com.Soranoana.RadiallyInterface",
+            "processId": 5570,
             "exited": false
         }
     ],
