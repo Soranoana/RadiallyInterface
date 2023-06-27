@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "192.168.2.103:5555",
+    "m_SelectedDeviceId": "1WMHH815GM0365",
     "m_SelectedPackage": {
-        "deviceId": "192.168.2.103:5555",
+        "deviceId": "1WMHH815GM0365",
         "name": "com.Soranoana.RadiallyInterface",
-        "processId": 13413,
+        "processId": 13903,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -63,28 +63,16 @@
             "exited": false
         },
         {
-            "deviceId": "1WMHH815GM0365",
+            "deviceId": "192.168.2.103:5555",
             "name": "com.Soranoana.RadiallyInterface",
-            "processId": 16629,
-            "exited": true
+            "processId": 10830,
+            "exited": false
         },
         {
-            "deviceId": "1WMHH815GM0365",
+            "deviceId": "192.168.2.103:5555",
             "name": "com.Soranoana.RadiallyInterface",
-            "processId": 23230,
-            "exited": true
-        },
-        {
-            "deviceId": "1WMHH815GM0365",
-            "name": "com.Soranoana.RadiallyInterface",
-            "processId": 26993,
-            "exited": true
-        },
-        {
-            "deviceId": "1WMHH815GM0365",
-            "name": "com.Soranoana.RadiallyInterface",
-            "processId": 29702,
-            "exited": true
+            "processId": 7245,
+            "exited": false
         },
         {
             "deviceId": "1WMHH815GM0365",
@@ -96,12 +84,30 @@
             "deviceId": "1WMHH815GM0365",
             "name": "com.oculus.os.vrusb",
             "processId": 30000,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "1WMHH815GM0365",
             "name": "com.Soranoana.RadiallyInterface",
             "processId": 5570,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH815GM0365",
+            "name": "com.Soranoana.RadiallyInterface",
+            "processId": 13413,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH815GM0365",
+            "name": "com.oculus.shellenv",
+            "processId": 2035,
+            "exited": true
+        },
+        {
+            "deviceId": "1WMHH815GM0365",
+            "name": "com.Soranoana.RadiallyInterface",
+            "processId": 13903,
             "exited": false
         }
     ],
