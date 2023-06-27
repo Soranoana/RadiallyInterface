@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "1WMHH815GM0365",
         "name": "com.Soranoana.RadiallyInterface",
-        "processId": 13903,
+        "processId": 16977,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -108,6 +108,12 @@
             "deviceId": "1WMHH815GM0365",
             "name": "com.Soranoana.RadiallyInterface",
             "processId": 13903,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH815GM0365",
+            "name": "com.Soranoana.RadiallyInterface",
+            "processId": 16977,
             "exited": false
         }
     ],
