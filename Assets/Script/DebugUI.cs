@@ -24,7 +24,6 @@ public class DebugUI : MonoBehaviour {
 
 		// 左のオプションボタンでデバッグログをクリア
 		if (OVRInput.GetDown(OVRInput.Button.Start)) {
-			DebugUIBuilder.instance.Clear();
 			DebugUIBuilder.instance.AddLabel("Clear");
 			DebugUIBuilder.instance.AddDivider();
 		}
