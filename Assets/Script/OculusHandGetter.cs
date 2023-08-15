@@ -29,35 +29,35 @@ public class OculusHandGetter : MonoBehaviour {
 		//各ボーンに色や形、位置を設定した子オブジェクトを生成する
 		int index = 0;
 		if (!isCheck) {
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 4, Color.red);
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 4, Color.red);			// Bone[ 0]:Hand_WristRoot
 
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 3, Color.red);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.blue);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.blue);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.blue);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 0.5f, Color.blue);
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 3, Color.red);			// Bone[ 1]:Hand_ForearmStub
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.blue);		// Bone[ 2]:Hand_Thumb0
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.blue);		// Bone[ 3]:Hand_Thumb1
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.blue);			// Bone[ 4]:Hand_Thumb2
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 0.5f, Color.blue);		// Bone[ 5]:Hand_Thumb3
 
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.yellow);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.yellow);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.yellow);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.green);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.green);
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.yellow);		// Bone[ 6]:Hand_Index1
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.yellow);	// Bone[ 7]:Hand_Index2
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.yellow);  		// Bone[ 8]:Hand_Index3
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.green);		// Bone[ 9]:Hand_Middle1
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.green);	// Bone[10]:Hand_Middle2
 
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.green);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.white);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.white);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.white);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.magenta);
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.green);			// Bone[11]:Hand_Middle3
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.white);		// Bone[12]:Hand_Ring1
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.white);	// Bone[13]:Hand_Ring2
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.white);			// Bone[14]:Hand_Ring3
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.magenta);		// Bone[15]:Hand_Pinky0
 
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.magenta);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.magenta);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 0.5f, Color.magenta);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.blue);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.yellow);
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 1.5f, Color.magenta);	// Bone[16]:Hand_Pinky1
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100, Color.magenta);			// Bone[17]:Hand_Pinky2
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 0.5f, Color.magenta);	// Bone[18]:Hand_Pinky3
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.blue);		// Bone[19]:Hand_ThumbTip
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.yellow);		// Bone[20]:Hand_IndexTip
 
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.green);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.white);
-			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.magenta);
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.green);		// Bone[21]:Hand_MiddleTip
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.white);		// Bone[22]:Hand_RingTip
+			primiteiveGenerator(oVRSkeleton.Bones[index++].Transform.gameObject, Vector3.one / 100 * 2, Color.magenta);		// Bone[23]:Hand_PinkyTip
 			isCheck = true;
 		}
 	}
